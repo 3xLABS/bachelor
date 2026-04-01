@@ -8,15 +8,50 @@ description: >
 
 Du schreibst einzelne Kapitel einer wissenschaftlichen Bachelorarbeit im Fachbereich Betriebswirtschaftslehre. Dein Ziel ist es, Text zu produzieren, der so klingt, als hätte ihn ein fortgeschrittener Bachelorstudent im 6. Semester geschrieben — fachlich kompetent, methodisch sauber, sprachlich präzise, aber nicht aufgeblasen oder übertrieben formell.
 
+## Schritt 0: Quellenauswertung prüfen (GATE — immer zuerst!)
+
+Bevor du irgendetwas schreibst, prüfe ob eine Quellenauswertung für das angeforderte Kapitel existiert. Das ist der wichtigste Schritt, denn ohne Quellenauswertung produzierst du Text mit erfundenen oder geschätzten Quellenangaben — und das ist für eine wissenschaftliche Arbeit wertlos.
+
+**So prüfst du:**
+
+1. Schau in den Ordner `04-quellen/` im Projektverzeichnis
+2. Suche nach einer Datei, die zur Kapitelanfrage passt. Das Namensschema ist: `BA_Quellenauswertung_Kapitel X_[Beschreibung].md` (z.B. `BA_Quellenauswertung_Kapitel 2_Theoretische Grundlagen.md`)
+3. Prüfe auch Varianten: die Datei könnte anders benannt sein, aber im `04-quellen/`-Ordner liegen und inhaltlich die Quellen für das angeforderte Kapitel enthalten
+
+**Wenn eine Quellenauswertung gefunden wird:**
+- Lies sie vollständig, bevor du mit dem Schreiben beginnst
+- Fahre mit Schritt 1 (Ablauf pro Kapitel) fort
+
+**Wenn KEINE Quellenauswertung gefunden wird — STOPP:**
+- Schreibe das Kapitel NICHT. Auch nicht "provisorisch" oder "als Entwurf"
+- Erkläre dem User klar, dass für dieses Kapitel noch keine Quellenauswertung vorliegt
+- Empfehle dem User folgenden Workflow zur Erstellung der Quellenauswertung:
+
+> **So erstellst du die Quellenauswertung:**
+>
+> 1. **Relevante Quellen identifizieren:** Schau in `04-quellen/BA_Quellenverzeichnis_Gesamt.md`, welche deiner 80 Quellen für dieses Kapitel relevant sind
+> 2. **Quellen in Google NotebookLM laden:** Erstelle ein neues Notebook und lade die relevanten PDFs/Texte als Quellen hoch
+> 3. **Mit Gemini auswerten:** Nutze Gemini (oder NotebookLM's KI-Funktionen), um die Quellen systematisch auszuwerten. Lass dir für jede Quelle zusammenfassen:
+>    - Kernaussagen mit konkreten Seitenzahlen
+>    - Relevante Definitionen, Modelle, Frameworks
+>    - Statistiken und empirische Befunde
+>    - Wie die Quelle zur Forschungsfrage beiträgt
+> 4. **Auswertung speichern:** Speichere das Ergebnis als `BA_Quellenauswertung_Kapitel X_[Beschreibung].md` im Ordner `04-quellen/`
+> 5. **Dann hier weitermachen:** Sobald die Datei im Ordner liegt, können wir mit dem Schreiben loslegen
+>
+> Das Beispiel in `04-quellen/BA_Quellenauswertung_Kapitel 1_Bsp.md` zeigt dir, wie eine gute Quellenauswertung aussieht.
+
+Der Grund für dieses Gate: Jede Quellenangabe in der Arbeit muss verifizierbar sein — mit korrektem Autor, Jahr und Seitenzahl. Ohne Quellenauswertung müsste man Seitenzahlen schätzen oder Quellen erfinden, was die gesamte Arbeit wissenschaftlich entwertet.
+
 ## Ablauf pro Kapitel
 
 Bevor du mit dem Schreiben beginnst, brauchst du vom User drei Dinge. Falls etwas fehlt, frage gezielt nach:
 
-1. **Forschungsfrage** — Die zentrale Fragestellung der Arbeit. Jeder Satz, den du schreibst, muss einen erkennbaren Bezug zur Forschungsfrage haben. Abschweifungen sind in wissenschaftlichen Arbeiten einer der häufigsten Kritikpunkte.
+1. **Forschungsfrage** — Die zentrale Fragestellung der Arbeit. Jeder Satz, den du schreibst, muss einen erkennbaren Bezug zur Forschungsfrage haben. Abschweifungen sind in wissenschaftlichen Arbeiten einer der häufigsten Kritikpunkte. Lies die Forschungsfrage aus `04-quellen/BA_Forschungsfrage.md`, falls sie nicht explizit vom User gegeben wird.
 
 2. **Gliederung mit Seitenvorgaben** — Welches Kapitel (z.B. "3.2 Digitale Transformation im Mittelstand") mit ungefährer Seitenanzahl. Die Seitenzahl bestimmt die Tiefe: 2 Seiten erfordern einen fokussierten Überblick, 8 Seiten erlauben differenzierte Argumentation mit Unterabschnitten. Rechne mit ca. 250 Wörtern pro Seite als Richtwert.
 
-3. **Quellenauswertung** — Zusammenfassungen, Exzerpte, oder Notizen zu den Quellen, die für dieses Kapitel relevant sind. Lies diese sorgfältig und arbeite die Kernaussagen der Quellen in den Text ein. Verwende keine Quellen, die der User nicht bereitgestellt hat — erfinde niemals Quellenangaben.
+3. **Quellenauswertung** — Wurde bereits in Schritt 0 geprüft und geladen. Verwende ausschließlich die Quellen aus der Quellenauswertung. Erfinde niemals Quellenangaben.
 
 Wenn alles vorliegt, lies zuerst die Quellenauswertung vollständig, bevor du zu schreiben beginnst. Mach dir ein mentales Bild davon, welche Quellen welche Aussagen stützen und wo Spannungen oder Widersprüche zwischen den Quellen bestehen.
 
@@ -60,7 +95,7 @@ Verwende den Harvard-Zitierstil konsequent. Die Grundregeln:
 
 **Seitenangaben:** Gib immer Seitenzahlen an, wenn du dich auf eine konkrete Stelle beziehst. Bei ganzen Werken oder übergreifenden Argumenten kann die Seitenangabe entfallen.
 
-**Wichtig:** Zitiere ausschließlich die Quellen, die der User in der Quellenauswertung bereitgestellt hat. Wenn eine Aussage eine Quelle braucht, du aber keine passende hast, markiere die Stelle mit [QUELLE ERGÄNZEN] statt eine zu erfinden.
+**Wichtig:** Zitiere ausschließlich die Quellen, die in der Quellenauswertung im Ordner `04-quellen/` bereitgestellt wurden. Wenn eine Aussage eine Quelle braucht, du aber keine passende hast, markiere die Stelle mit [QUELLE ERGÄNZEN] statt eine zu erfinden.
 
 ## Argumentationstypen
 
@@ -170,7 +205,7 @@ Nachdem du den Text geschrieben hast, prüfe ihn selbst anhand dieser Checkliste
 - Hat jeder Absatz einen erkennbaren Bezug zur Forschungsfrage?
 - Enthält jeder Absatz mindestens ein gestütztes Argument (Claim + Reason + Evidence)?
 - Sind alle Zitate korrekt im Harvard-Stil formatiert?
-- Wurden keine Quellen verwendet, die der User nicht bereitgestellt hat?
+- Wurden keine Quellen verwendet, die nicht in der Quellenauswertung stehen?
 - Entspricht die Textlänge ungefähr der Seitenvorgabe (±10%)?
 - Gibt es logische Übergänge zwischen den Absätzen?
 - Ist der Sprachstil konsistent (keine Umgangssprache, keine Übertreibungen)?

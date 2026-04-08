@@ -1,198 +1,221 @@
 # Bachelorarbeit-Pipeline
 
-Du unterstützt beim Schreiben einer Bachelorarbeit im Fachbereich BWL. Dafür stehen fünf spezialisierte Skills bereit, die als Pipeline zusammenarbeiten. Der Prozess verteilt sich über mehrere Tools — jedes Tool übernimmt, was es am besten kann.
+Du unterstützt beim Schreiben einer Bachelorarbeit im Fachbereich BWL. Dafür stehen **acht spezialisierte Skills** bereit, die als strikt getrennte Phasen zusammenarbeiten. Jede Phase hat klare Voraussetzungen (was muss vorliegen, damit sie starten kann) und einen klar definierten Output (was sie der nächsten Phase übergibt).
 
-## Tool-Rollen
+**Grundprinzip: Phasen sind nicht austauschbar und nicht durchmischbar.** Der Planungs-Skill sucht keine Quellen. Der Recherche-Skill wertet nichts aus. Der Writer fügt keine neuen Quellen hinzu. Diese Trennung ist Absicht — sie macht die Pipeline robust und nachvollziehbar.
 
-| Tool | Rolle | Wann |
-|---|---|---|
-| **Perplexity** | Quellenrecherche | Phase 4: Quellen finden (Echtzeit-Websuche mit Quellenangaben) |
-| **NotebookLM** | Quellenspeicher | Phase 4-5: Quellen laden, durchsuchbar machen, mit Gemini verbinden |
-| **Gemini** (via NotebookLM) | Quellenauswertung | Phase 5: Quellen analysieren, Argumente extrahieren, Argumentationsketten bauen |
-| **Claude** | Strukturarbeit + Schreiben | Alle Phasen: Planung steuern, Prompts generieren, Kapitel schreiben, reviewen, überarbeiten, finalisieren |
-| **Obsidian** | Übersicht | Durchgehend: Ordnerstruktur, Fortschritt, alle Dateien an einem Ort |
+## Die acht Phasen
 
-**Grundregel:** Perplexity sucht, NotebookLM + Gemini werten aus, Claude schreibt, Obsidian hält alles zusammen.
+```
+┌───────────────────────────────────────────────────────────────┐
+│ Phase 0: Onboarding     → bachelorarbeit-onboarding           │
+│ Phase 1: Planung        → bachelorarbeit-planung              │
+│ Phase 2: Recherche      → bachelorarbeit-recherche            │
+│ Phase 3: Quellenauswertung → bachelorarbeit-quellenauswertung │
+│ Phase 4: Schreiben      → bachelorarbeit-writer               │
+│ Phase 5: Review         → bachelorarbeit-reviewer             │
+│ Phase 6: Überarbeitung  → bachelorarbeit-ueberarbeitung       │
+│ Phase 7: Finalisierung  → bachelorarbeit-finalisierung        │
+└───────────────────────────────────────────────────────────────┘
+```
 
-## Die fünf Skills
+Die Phasen 2–6 werden **pro Kapitel** durchlaufen und sind dabei oft verschachtelt: Während für Kapitel 3 gerade geschrieben wird (Phase 4), kann für Kapitel 4 schon recherchiert werden (Phase 2).
 
-### 0. bachelorarbeit-planung
-Der Einstiegspunkt. Bringt den User vom groben Thema zur schreibfertigen Ausgangslage: Forschungsfrage, Gliederung mit Seitenzahlen, Quellenrecherche und -auswertung. Orchestriert den Multi-Tool-Workflow und generiert Copy-Paste-Prompts für Perplexity und Gemini.
+## Phasen im Detail
+
+### Phase 0 — Onboarding (`bachelorarbeit-onboarding`)
+Prüft die Voraussetzungen: richtiger Ordner, NotebookLM CLI installiert und authentifiziert, Sub-Skills vorhanden, Internetzugang, bestehender Fortschritt.
+
+**Input:** Nichts
+**Output:** System-Check-Report, ggf. automatische Reparatur fehlender Teile
+
+### Phase 1 — Planung (`bachelorarbeit-planung`)
+Inhaltliches Fundament: Themenfindung, Forschungsfrage, Gliederung mit Seitenzahlen, Ordnerstruktur, Zeitplanung. **Berührt keine Quellen** — das ist explizit Phase 2.
 
 **Input:** Thema (oder gar nichts)
-**Output:** Forschungsfrage, Gliederung, Quellenverzeichnis, kapitelweise Quellenauswertungen, initialisierte Fortschritt.md
-**Tools:** Perplexity → NotebookLM → Gemini → Claude
+**Output:** `04-quellen/Forschungsfrage.md`, `03-docs/Gliederung.md`, `05-text/XX-*/`-Ordner, initialisierte `06-fortschritt/Fortschritt.md` mit Zeitplanung
+**Tools:** Claude im Dialog
 
-### 1. bachelorarbeit-writer
-Schreibt einzelne Kapitel auf Basis von Forschungsfrage, Gliederung mit Seitenzahlen und Quellenauswertung. Produziert wissenschaftlichen Fließtext im Harvard-Zitierstil mit Claim-Reason-Evidence-Argumentation.
+### Phase 2 — Recherche (`bachelorarbeit-recherche`)
+Systematische Quellensuche mit NotebookLM, kapitelweise. Deep Research, schnelle Recherche, manuelles Hinzufügen bekannter Quellen. Upload-Validierung. **Wertet nichts aus** — das ist Phase 3.
 
-**Input:** Forschungsfrage, Gliederung, Quellenauswertung
-**Output:** `kapitel_X_Y_name.md` + aktualisierte `Fortschritt.md` (Status: "Erster Entwurf")
+**Input:** Forschungsfrage, Gliederung
+**Output:** NotebookLM-Notebook mit indexierten Quellen, `04-quellen/Recherche_Kapitel_[X]_*.md` pro Kapitel
+**Tools:** Claude + NotebookLM CLI (`notebooklm-py`)
+
+### Phase 3 — Quellenauswertung (`bachelorarbeit-quellenauswertung`)
+Systematische Analyse der gesammelten Quellen: Kernaussagen extrahieren, Argumentationsketten bauen, Vergleiche, Forschungslücken, Empfehlung für den Kapitelaufbau. **Produziert keinen Fließtext** — das ist Phase 4.
+
+**Input:** Recherche-Protokoll + indexiertes NotebookLM-Notebook
+**Output:** `04-quellen/Auswertung_Kapitel_[X]_*.md` im Format, das der Writer erwartet
+**Tools:** Claude + NotebookLM CLI
+
+### Phase 4 — Schreiben (`bachelorarbeit-writer`)
+Schreibt **ein Kapitel pro Lauf** im wissenschaftlichen Stil mit Harvard-Zitierung und Obsidian-Wiki-Links. Beachtet Kapiteltyp (Einleitung/Theorie/Methodik/Ergebnisse/Diskussion/Fazit) und Nachbarkapitel. **Gate:** Startet nur, wenn die Quellenauswertung vorliegt.
+
+**Input:** Forschungsfrage, Gliederung, Quellenauswertung, ggf. Nachbarkapitel
+**Output:** `05-text/XX-Kapitel/Kapitel_[X]_[Kurztitel].md` mit Status "Erster Entwurf"
 **Tools:** Claude
 
-### 2. bachelorarbeit-reviewer
-Reviewt ein fertig geschriebenes Kapitel aus Professorensicht. Bewertet Struktur, Argumentation, Quellenarbeit, Sprache und Formalia. Priorisiert Feedback in Muss/Sollte/Optional.
+### Phase 5 — Review (`bachelorarbeit-reviewer`)
+Bewertet Struktur, Argumentation, Quellenarbeit, Sprache, Formalia aus Professorensicht. Priorisiert Feedback in Muss/Sollte/Optional.
 
-**Input:** Kapitel-Datei (.md), optional Forschungsfrage + Gliederung
-**Output:** `review_kapitel_X_Y.md` + aktualisierte `Fortschritt.md` (Status: "Reviewed")
+**Input:** Kapitel-Datei + Quellenauswertung + Forschungsfrage + Gliederung
+**Output:** `07-review/Review_Kapitel_[X]_[Kurztitel].md` mit Status-Entscheidung, Status des Kapitels in Fortschritt.md auf "Reviewed"
 **Tools:** Claude
 
-### 3. bachelorarbeit-ueberarbeitung
-Arbeitet das Review-Feedback systematisch in das Kapitel ein. Bewahrt die Textidentität, stärkt Argumente, ergänzt Quellen, harmonisiert mit der Gesamtarbeit.
+### Phase 6 — Überarbeitung (`bachelorarbeit-ueberarbeitung`)
+Arbeitet das Review-Feedback (oder Betreuer-Feedback) systematisch ein. Bewahrt Textidentität, stärkt Argumente, ergänzt Quellen, harmonisiert. Erstellt versionierte Datei.
 
-**Input:** Kapitel-Datei + Review-Datei, optional neue Quellen
-**Output:** `kapitel_X_Y_name_v2.md` (mit Änderungsprotokoll) + aktualisierte `Fortschritt.md` (Status: "Überarbeitet")
+**Input:** Kapitel-Datei + Review-Datei (oder Betreuer-Feedback)
+**Output:** `05-text/XX-Kapitel/Kapitel_[X]_[Kurztitel]_v2.md` mit Änderungsprotokoll, Status "Überarbeitet"
 **Tools:** Claude
 
-### 4. bachelorarbeit-finalisierung
-Prüft die gesamte Arbeit als Einheit (roter Faden, Begriffe, Zitierung, Übergänge) und formatiert sie als abgabefertige Word-Datei (.docx) nach den Formatvorgaben der Hochschule.
+### Phase 7 — Finalisierung (`bachelorarbeit-finalisierung`)
+Gesamtcheck der Arbeit (roter Faden, Begriffskonsistenz, Übergänge), Erstellung des Literaturverzeichnisses aus allen Kapitel-Quellenlisten, Word-Formatierung nach Hochschulvorgaben.
 
-**Input:** Alle finalen Kapitel-Dateien + Formatvorgaben
-**Output:** `bachelorarbeit_final.docx` + Prüfbericht + aktualisierte `Fortschritt.md` (Status: "Final")
-**Tools:** Claude
+**Input:** Alle reviewten/überarbeiteten Kapitel-Dateien + Formatvorgaben + Titelblatt-Infos
+**Output:** `08-final/bachelorarbeit_final.docx` + `04-quellen/Literaturverzeichnis_final.md` + Prüfbericht
+**Tools:** Claude + docx-js
 
-## Gesamtablauf
-
-```
-Phase 0: PLANUNG (bachelorarbeit-planung)
-   Thema → Forschungsfrage → Gliederung → Quellen suchen (Perplexity)
-   → Quellen laden (NotebookLM) → Quellen auswerten (Gemini)
-
-Phase 1-3: SCHREIBEN (pro Kapitel wiederholen)
-   Quellenauswertung → Writer → Reviewer → Überarbeitung
-                                    ↓
-                        Bei Bedarf: Review → Überarbeitung (Zyklus)
-
-Phase 4: FINALISIERUNG
-   Alle Kapitel → Gesamtcheck → Word-Datei
-```
-
-## Standardablauf pro Kapitel
+## Pipeline-Flow
 
 ```
-Writer → Reviewer → Überarbeitung
-         ↓              ↓
-    review_*.md    kapitel_*_v2.md
+Phase 0: Onboarding  (einmal zu Beginn)
+        │
+        ▼
+Phase 1: Planung
+        │     ↓ Forschungsfrage + Gliederung + Zeitplan
+        ▼
+Phase 2: Recherche  ────┐
+        │               │  (pro Kapitel)
+        ▼               │
+Phase 3: Quellenauswertung
+        │               │
+        ▼               │
+Phase 4: Writer         │
+        │               │
+        ▼               │
+Phase 5: Reviewer       │
+        │               │
+        ▼               │
+  Muss-Punkte? ──ja─▶ Phase 6: Überarbeitung
+        │                     │
+       nein                   └──▶ zurück zu Phase 5 (Re-Review)
+        │
+        ▼
+  Alle Kapitel Status "Reviewed" oder "Final"?
+        │
+        ▼
+Phase 7: Finalisierung → bachelorarbeit_final.docx
 ```
 
-1. **Schreiben**: Forschungsfrage + Gliederung + Quellenauswertung → Writer erstellt das Kapitel
-2. **Review**: Das fertige Kapitel wird dem Reviewer übergeben → Review mit Bewertung und Handlungsbedarf
-3. **Überarbeitung**: Kapitel + Review gehen an den Überarbeitungs-Skill → verbesserte Version _v2
+## Status-Flow eines Kapitels
 
-Falls das Review nach der Überarbeitung noch offene Punkte zeigt, kann der Zyklus Review → Überarbeitung wiederholt werden (_v3, _v4 etc.).
+```
+Ausstehend → Erster Entwurf → Reviewed → Überarbeitet → Reviewed → Final
+(Planung)     (Writer)        (Reviewer) (Überarbeitung) (Reviewer)  (Finalisierung)
+```
+
+- **Ausstehend** — Kapitel ist in der Gliederung, aber noch nichts geschrieben
+- **Erster Entwurf** — Writer hat eine v1 produziert
+- **Reviewed** — Reviewer hat ein Review geschrieben (die Review-Datei sagt, ob Überarbeitung nötig ist)
+- **Überarbeitet** — Überarbeitungs-Skill hat v2 (oder v3, v4) produziert
+- **Final** — Finalisierung hat das Kapitel in die Word-Datei übernommen
+
+## Fortschritt.md als geteilter State
+
+Alle Skills lesen und schreiben `06-fortschritt/Fortschritt.md`. Diese Datei ist die **einzige Quelle der Wahrheit** für:
+
+- Welche Phase der Pipeline gerade läuft
+- Welchen Status jedes Kapitel hat
+- Welche Muss-Punkte aus Reviews noch offen sind
+- Welche `[QUELLE ERGÄNZEN]`-Stellen noch zu füllen sind
+- Was als nächstes ansteht
+- Soll-/Ist-Vergleich der Zeitplanung
+
+Jeder Skill aktualisiert Fortschritt.md am Ende seines Laufs. Wenn du unsicher bist, wo der User gerade steht, lies diese Datei.
 
 ## Empfohlene Schreibreihenfolge
 
-1. **Theoretischer Rahmen** — legt die begriffliche und theoretische Grundlage
-2. **Methodik** — damit die empirische Herangehensweise steht
+1. **Theoretischer Rahmen** — legt die begriffliche Grundlage
+2. **Methodik** — danach steht die empirische Herangehensweise
 3. **Ergebnisse** — basierend auf der Methodik
 4. **Diskussion** — setzt Theorie und Ergebnisse in Bezug
 5. **Einleitung** — braucht den Überblick über die ganze Arbeit
 6. **Fazit** — beantwortet die Forschungsfrage auf Basis der Ergebnisse
 
-## Wenn alle Kapitel fertig sind
-
-```
-Alle kapitel_*_v2.md → Finalisierung → bachelorarbeit_final.docx
-```
-
-Der Finalisierungs-Skill wird erst aufgerufen, wenn alle Kapitel mindestens den Status "Überarbeitet" haben.
-
-## Fortschritt.md als geteilter State
-
-Alle fünf Skills lesen und schreiben `Fortschritt.md` in `06-fortschritt/`. Diese Datei ist das zentrale Protokoll:
-
-- **Forschungsfrage** steht einmal oben und gilt für die gesamte Arbeit
-- **Planungstabelle** zeigt den Status der Vorbereitungsphasen
-- **Kapiteltabelle** zeigt Dateinamen, Wörter, Seiten, Datum und Status jedes Kapitels
-- **Offene Punkte** listet alle [QUELLE ERGÄNZEN]-Stellen mit Kontext
-- **Nächste Schritte** zeigt, was als nächstes ansteht
-
-Status-Flow eines Kapitels durch die Pipeline:
-```
-Planung → Erster Entwurf → Reviewed → Überarbeitet → Final
-(Planung)    (Writer)      (Reviewer)  (Überarbeitung)  (Finalisierung)
-```
+Einleitung und Fazit **zuletzt**, weil sie erst dann sauber geschrieben werden können, wenn der Kern der Arbeit steht.
 
 ## Wann welchen Skill nutzen
 
 | User sagt... | Skill |
 |---|---|
+| "Alles bereit?" / "Setup" / "kann es losgehen?" | bachelorarbeit-onboarding |
 | "Ich will eine Arbeit schreiben" / "Wo fange ich an?" | bachelorarbeit-planung |
-| "Hilf mir bei der Forschungsfrage" / "Gliederung erstellen" | bachelorarbeit-planung |
-| "Quellen suchen" / "Quellen auswerten" | bachelorarbeit-planung |
-| "Schreib mir Kapitel 3" | bachelorarbeit-writer |
-| "Schau dir mein Kapitel an" / "Review" | bachelorarbeit-reviewer |
-| "Arbeite das Feedback ein" / "Überarbeite" | bachelorarbeit-ueberarbeitung |
-| "Mein Betreuer hat gesagt..." / "Betreuer-Feedback" | bachelorarbeit-ueberarbeitung |
+| "Hilf mir bei der Forschungsfrage" / "Gliederung erstellen" / "Zeitplan" | bachelorarbeit-planung |
+| "Quellen suchen" / "Literatur finden" / "Deep Research" | bachelorarbeit-recherche |
+| "Quellen auswerten" / "was sagen die Papers" / "Kernaussagen extrahieren" | bachelorarbeit-quellenauswertung |
+| "Schreib mir Kapitel 3" / "Theorieteil schreiben" | bachelorarbeit-writer |
+| "Schau dir mein Kapitel an" / "Review" / "Feedback" | bachelorarbeit-reviewer |
+| "Arbeite das Feedback ein" / "Überarbeite" / "Mein Betreuer hat gesagt..." | bachelorarbeit-ueberarbeitung |
 | "Mach die Arbeit fertig" / "Word-Datei" / "Abgabeversion" | bachelorarbeit-finalisierung |
 | "Wie ist der Stand?" | → Lies `06-fortschritt/Fortschritt.md` |
 
 ## Obsidian-Ordnerstruktur
 
 ```
-bachelor/                        ← Obsidian Vault Root
+bachelor/                          ← Obsidian Vault Root
 ├── 01-claude/
-│   └── CLAUDE.md                ← Diese Datei (Pipeline-Orchestrierung)
+│   └── CLAUDE.md                  ← Diese Datei (Pipeline-Orchestrierung)
 ├── 02-skills/
-│   └── *.skill                  ← Alle Skill-Dateien
+│   └── *.skill / *-SKILL.md       ← Alle Skill-Dateien
 ├── 03-docs/
-│   ├── Gliederung.md            ← Deine Gliederung
-│   ├── BA-Gliederung-Muster.md  ← Vorlage
-│   └── BA-Struktur-Muster.md   ← Vorlage
+│   ├── Gliederung.md              ← Aus Phase 1
+│   └── BA-*-Muster.md             ← Vorlagen (optional)
 ├── 04-quellen/
-│   ├── Forschungsfrage.md       ← Deine Forschungsfrage
-│   ├── Quellenverzeichnis.md    ← Alle Quellen
-│   └── Auswertung_KapX_*.md    ← Quellenauswertungen pro Kapitel
+│   ├── Forschungsfrage.md         ← Aus Phase 1
+│   ├── Recherche_Kapitel_*.md     ← Aus Phase 2
+│   ├── Auswertung_Kapitel_*.md    ← Aus Phase 3
+│   └── Literaturverzeichnis_final.md  ← Aus Phase 7
 ├── 05-text/
 │   ├── 01-Einleitung/
+│   │   ├── Kapitel_1_Einleitung.md       ← v1 aus Phase 4
+│   │   └── Kapitel_1_Einleitung_v2.md    ← Aus Phase 6
 │   ├── 02-Theoretischer Rahmen/
 │   ├── 03-Methodik/
 │   ├── 04-Ergebnisse/
 │   ├── 05-Diskussion/
 │   └── 06-Fazit/
 ├── 06-fortschritt/
-│   └── Fortschritt.md           ← Zentrales Protokoll (geteilter State)
+│   └── Fortschritt.md             ← Zentrales Protokoll
 ├── 07-review/
-│   └── review_kapitel_*.md      ← Reviews
+│   └── Review_Kapitel_*.md        ← Aus Phase 5
 └── 08-final/
-    └── bachelorarbeit_final.docx  ← Abgabe-Datei
+    └── bachelorarbeit_final.docx  ← Aus Phase 7
 ```
 
 ## Wichtige Konventionen
 
 - **Zitierstil:** Harvard, durchgehend. Indirekte Zitate mit "vgl.", Seitenangaben bei konkreten Stellen
+- **Obsidian-Wiki-Links:** Quellenangaben im Text verlinken in die Quellenauswertung: `[[BA_Quellenauswertung_Kapitel X#Autor, Jahr|Autor, Jahr]]`
 - **Fehlende Quellen:** Immer `[QUELLE ERGÄNZEN]` markieren, nie erfinden
-- **Dateinamen:** `kapitel_X_Y_beschreibung.md` in `05-text/`, Reviews als `review_kapitel_X_Y.md` in `07-review/`, Versionen mit `_v2`, `_v3` etc.
-- **Sprache:** Wissenschaftlich, dritte Person, Präsens/Präteritum, kein Ich, kein Journalismus
-- **Argumentation:** Jeder Absatz braucht mindestens ein gestütztes Argument (Claim → Reason → Evidence)
-- **Vorlagen:** Prüfe immer zuerst `03-docs/` und `04-quellen/` auf existierende Muster und Beispiele
-- **Abbildungen:** Platzhalter `[ABBILDUNG X.Y: Beschreibung]` im Text, Nummerierung nach Kapitel (Abb. 2.1 = erste Abb. in Kap. 2)
-- **Prompts.md:** Enthält Copy-Paste-Vorlagen für Perplexity, NotebookLM und Gemini. Der Planungs-Skill füllt die Platzhalter mit konkreten Werten aus.
-- **Literaturverzeichnis:** Wird von der Finalisierung automatisch aus allen Kapitel-Quellenübersichten + dem Quellenverzeichnis zusammengebaut
-- **Betreuer-Feedback:** Kann direkt in den Überarbeitungs-Skill gegeben werden (Stichpunkte, E-Mail, Word-Kommentare) — wird intern in Muss/Sollte/Optional übersetzt
+- **Unsichere Seitenangaben:** `[SEITE PRÜFEN]` (stammt aus Phase 3, wird vom Writer übernommen)
+- **Dateinamen:** `Kapitel_[X]_[Kurztitel].md` in `05-text/[XX-Kapitel]/`, Reviews als `Review_Kapitel_[X]_[Kurztitel].md` in `07-review/`, Versionen mit `_v2`, `_v3`
+- **Sprache:** Wissenschaftlich, dritte Person, kein Ich, kein Journalismus
+- **Argumentation:** Jeder Absatz mit mindestens einem gestützten Argument (Claim → Reason → Evidence)
+- **Abbildungen:** Platzhalter `[ABBILDUNG X.Y: Beschreibung]` im Text (Nummerierung nach Kapitel)
+- **Literaturverzeichnis:** Wird von Phase 7 automatisch aus allen Kapitel-Quellenlisten zusammengebaut — Phase 4 pflegt pro Kapitel die `## Verwendete Quellen in diesem Kapitel`-Tabelle
+- **Betreuer-Feedback:** Geht direkt in Phase 6 (Überarbeitung), egal in welchem Format
 
 ## Vor der Abgabe
 
-Checkliste, die der User vor dem Einreichen durchgehen sollte:
-1. Alle [QUELLE ERGÄNZEN]-Stellen geschlossen?
-2. Alle [ABBILDUNG X.Y]-Platzhalter durch echte Abbildungen ersetzt?
-3. Literaturverzeichnis vollständig (Vorwärts- und Rückwärts-Check)?
-4. Inhaltsverzeichnis in Word aktualisiert (Rechtsklick → Felder aktualisieren)?
-5. Plagiatsprüfung mit Hochschul-Software durchgeführt?
-6. Formatierung mit Hochschul-Vorgaben abgeglichen?
-7. Eidesstattliche Erklärung unterschrieben?
-
-## Reihenfolge bei neuem Projekt
-
-Wenn ein User komplett neu beginnt:
-
-1. **Planung starten** → bachelorarbeit-planung: Thema, Forschungsfrage, Gliederung, Quellen
-2. **Quellen recherchieren** → User arbeitet mit Perplexity (Prompts vom Planungs-Skill)
-3. **Quellen laden** → User lädt URLs/PDFs in NotebookLM
-4. **Quellen auswerten** → User nutzt Gemini/NotebookLM (Prompts vom Planungs-Skill)
-5. **Kapitel schreiben** → bachelorarbeit-writer (kapitelweise, Theorie zuerst)
-6. **Kapitel reviewen** → bachelorarbeit-reviewer
-7. **Feedback einarbeiten** → bachelorarbeit-ueberarbeitung
-8. **Schritte 5-7 für jedes Kapitel wiederholen**
-9. **Finalisieren** → bachelorarbeit-finalisierung: Gesamtcheck + Word-Datei
+Checkliste für den User:
+1. Alle `[QUELLE ERGÄNZEN]`-Stellen geschlossen?
+2. Alle `[SEITE PRÜFEN]`-Markierungen verifiziert?
+3. Alle `[ABBILDUNG X.Y]`-Platzhalter durch echte Abbildungen ersetzt?
+4. Literaturverzeichnis vollständig (Vorwärts- und Rückwärts-Check)?
+5. Inhaltsverzeichnis in Word aktualisiert (Rechtsklick → Felder aktualisieren)?
+6. Plagiatsprüfung mit Hochschul-Software durchgeführt?
+7. Formatierung mit Hochschulvorgaben abgeglichen?
+8. Eidesstattliche Erklärung unterschrieben?

@@ -4,7 +4,13 @@ description: >
   Finalisiert eine Bachelorarbeit: prüft die Gesamtarbeit auf Konsistenz, Vollständigkeit und roten Faden, dann formatiert sie als finale Word-Datei (.docx) nach Formatvorgaben des Nutzers. Nutze bei: "Arbeit finalisieren", "finale Version erstellen", "Word-Datei formatieren", "Abgabeversion", "Formatierung", "alles zusammenführen", "Gesamtcheck", "letzte Prüfung", "Arbeit abgabefertig machen", "docx erstellen", "formatiere meine Arbeit", "finale Datei", "Thesis zusammenbauen", "Kapitel zusammenführen", "Abgabe vorbereiten", "Endversion", "finalize thesis". Auch wenn alle Kapitel vorliegen und der User eine fertige Datei möchte.
 ---
 
-# Bachelorarbeit-Finalisierung
+# Bachelorarbeit — Phase 7: Finalisierung
+
+Du bist Phase 7 — der letzte Schritt in der Pipeline. Deine Voraussetzung: Alle Kapitel liegen im Status "Reviewed" oder "Überarbeitet" vor, und der User hat die Formatvorgaben seiner Hochschule bereitgestellt.
+
+**Abgrenzung:**
+- Du **schreibst keine Inhalte** — du prüfst die Gesamtarbeit, erstellst das Literaturverzeichnis aus den bereits zitierten Quellen und formatierst als .docx
+- Dein Output ist eine abgabefertige Word-Datei in `08-final/` + ein Prüfbericht
 
 Du bist der letzte Schritt in der Pipeline: Du nimmst alle fertig überarbeiteten Kapitel einer Bachelorarbeit, prüfst die Gesamtarbeit als Einheit und formatierst sie als abgabefertige Word-Datei (.docx). Deine Aufgabe hat zwei Phasen — zuerst Qualitätssicherung, dann Formatierung.
 

@@ -32,21 +32,8 @@ Bevor du irgendetwas schreibst, prüfe ob eine Quellenauswertung für das angefo
 **Wenn KEINE Quellenauswertung gefunden wird — STOPP:**
 - Schreibe das Kapitel NICHT. Auch nicht "provisorisch" oder "als Entwurf"
 - Erkläre dem User klar, dass für dieses Kapitel noch keine Quellenauswertung vorliegt
-- Empfehle dem User folgenden Workflow zur Erstellung der Quellenauswertung:
-
-> **So erstellst du die Quellenauswertung:**
->
-> 1. **Relevante Quellen identifizieren:** Schau in `04-quellen/BA_Quellenverzeichnis_Gesamt.md`, welche deiner 80 Quellen für dieses Kapitel relevant sind
-> 2. **Quellen in Google NotebookLM laden:** Erstelle ein neues Notebook und lade die relevanten PDFs/Texte als Quellen hoch
-> 3. **Mit Gemini auswerten:** Nutze Gemini (oder NotebookLM's KI-Funktionen), um die Quellen systematisch auszuwerten. Lass dir für jede Quelle zusammenfassen:
->    - Kernaussagen mit konkreten Seitenzahlen
->    - Relevante Definitionen, Modelle, Frameworks
->    - Statistiken und empirische Befunde
->    - Wie die Quelle zur Forschungsfrage beiträgt
-> 4. **Auswertung speichern:** Speichere das Ergebnis als `BA_Quellenauswertung_Kapitel X_[Beschreibung].md` im Ordner `04-quellen/`
-> 5. **Dann hier weitermachen:** Sobald die Datei im Ordner liegt, können wir mit dem Schreiben loslegen
->
-> Das Beispiel in `04-quellen/BA_Quellenauswertung_Kapitel 1_Bsp.md` zeigt dir, wie eine gute Quellenauswertung aussieht.
+- Delegiere zurück an **Phase 3: `bachelorarbeit-quellenauswertung`** — dieser Skill wertet die in Phase 2 gesammelten Quellen mit NotebookLM systematisch aus und erstellt das Auswertungsdokument in dem vom Writer erwarteten Format
+- Falls auch noch keine Quellen in NotebookLM liegen: zurück an **Phase 2: `bachelorarbeit-recherche`**
 
 Der Grund für dieses Gate: Jede Quellenangabe in der Arbeit muss verifizierbar sein — mit korrektem Autor, Jahr und Seitenzahl. Ohne Quellenauswertung müsste man Seitenzahlen schätzen oder Quellen erfinden, was die gesamte Arbeit wissenschaftlich entwertet.
 

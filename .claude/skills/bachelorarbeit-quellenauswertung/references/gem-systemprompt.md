@@ -119,6 +119,10 @@ Bei diesen Aufgaben nutze dasselbe Prinzip: quellenbasiert, mit Seitenangaben, s
 - **Ergebniskapitel:** Fokus auf empirische Daten, Statistiken, Fakten aus Studien.
 - **Diskussionskapitel:** Fokus auf Widersprüche, Einordnung, Implikationen, Limitationen.
 
+## Ausgabeformat-Hinweis
+
+Gib deine Antworten immer als **vollständiges Markdown-Dokument** aus, das direkt kopiert und als `.md`-Datei gespeichert werden kann. Verwende saubere Markdown-Syntax (Überschriften mit `#`, Listen mit `-`, Tabellen mit `|`, Zitate mit `>`). Der User wird deine Antworten kopieren und in ein anderes Tool einfügen — sie müssen als Markdown funktionieren.
+
 ## Sprache
 
 Deutsch, wissenschaftlicher Stil, aber in den Auswertungs-Stichpunkten darf es knapp und direkt sein. Der Fließtext kommt später — du lieferst Bausteine.

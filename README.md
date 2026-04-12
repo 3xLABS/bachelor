@@ -19,13 +19,13 @@ Die Pipeline verteilt die Arbeit auf mehrere Tools, die jeweils das tun, was sie
 ## Die acht Skills
 
 ### 0. bachelorarbeit-onboarding
-Prüft die Voraussetzungen: richtiger Ordner, NotebookLM CLI installiert und authentifiziert, Sub-Skills vorhanden, Internetzugang, bestehender Fortschritt.
+Prüft die Voraussetzungen: richtiger Ordner, Google-Account für NotebookLM & Gemini, Sub-Skills vorhanden, Internetzugang, bestehender Fortschritt.
 
 ### 1. bachelorarbeit-planung
 Der Einstiegspunkt. Bringt dich vom groben Thema zur schreibfertigen Ausgangslage: Forschungsfrage, Gliederung mit Seitenzahlen, Quellenrecherche und -auswertung. Orchestriert den Multi-Tool-Workflow und generiert Copy-Paste-Prompts für Perplexity und Gemini.
 
 ### 2. bachelorarbeit-recherche
-Systematische Quellensuche mit NotebookLM, kapitelweise. Deep Research, schnelle Recherche, manuelles Hinzufügen bekannter Quellen.
+Systematische Quellensuche, kapitelweise. Claude liefert Strategie und Suchbegriffe, der User arbeitet selbstständig in NotebookLM im Browser.
 
 ### 3. bachelorarbeit-quellenauswertung
 Leitet die Quellenauswertung mit Gemini (via Gem + NotebookLM) an. Claude liefert die Gem-Systemprompt, kapitelspezifische Prompts und übernimmt die Nachbearbeitung ins Writer-Format — die eigentliche Analyse läuft in Gemini, um Token zu sparen.

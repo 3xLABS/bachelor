@@ -24,7 +24,7 @@ Die Phasen 2–6 werden **pro Kapitel** durchlaufen und sind dabei oft verschach
 ## Phasen im Detail
 
 ### Phase 0 — Onboarding (`bachelorarbeit-onboarding`)
-Prüft die Voraussetzungen: richtiger Ordner, NotebookLM CLI installiert und authentifiziert, Sub-Skills vorhanden, Internetzugang, bestehender Fortschritt.
+Prüft die Voraussetzungen: richtiger Ordner, Google-Account für NotebookLM & Gemini, Sub-Skills vorhanden, Internetzugang, bestehender Fortschritt.
 
 **Input:** Nichts
 **Output:** System-Check-Report, ggf. automatische Reparatur fehlender Teile
@@ -37,18 +37,18 @@ Inhaltliches Fundament: Themenfindung, Forschungsfrage, Gliederung mit Seitenzah
 **Tools:** Claude im Dialog
 
 ### Phase 2 — Recherche (`bachelorarbeit-recherche`)
-Systematische Quellensuche mit NotebookLM, kapitelweise. Deep Research, schnelle Recherche, manuelles Hinzufügen bekannter Quellen. Upload-Validierung. **Wertet nichts aus** — das ist Phase 3.
+Systematische Quellensuche, kapitelweise. Claude entwickelt die Recherchestrategie und generiert Suchbegriffe. Der User navigiert **selbstständig** zu NotebookLM im Browser und führt Deep Research, schnelle Recherche und manuelles Hinzufügen bekannter Quellen dort durch. Claude dokumentiert alles im Recherche-Protokoll. **Wertet nichts aus** — das ist Phase 3.
 
 **Input:** Forschungsfrage, Gliederung
-**Output:** NotebookLM-Notebook mit indexierten Quellen, `02-quellen/Recherche_Kapitel_[X]_*.md` pro Kapitel
-**Tools:** Claude + NotebookLM CLI (`notebooklm-py`)
+**Output:** NotebookLM-Notebook mit indexierten Quellen (vom User im Browser verwaltet), `02-quellen/Recherche_Kapitel_[X]_*.md` pro Kapitel
+**Tools:** Claude (Strategie + Dokumentation), User bedient NotebookLM selbstständig im Browser
 
 ### Phase 3 — Quellenauswertung (`bachelorarbeit-quellenauswertung`)
-Die Quellenauswertung läuft **in Gemini**, nicht in Claude — das spart Token. Claude liefert die Anleitung (Gem-Setup, kapitelspezifische Prompts) und übernimmt die Nachbearbeitung des Gemini-Outputs ins Writer-Format. **Produziert keinen Fließtext** — das ist Phase 4.
+Die Quellenauswertung läuft **in Gemini**, nicht in Claude — das spart Token. Claude liefert die Anleitung (Gem-Setup, kapitelspezifische Prompts) und übernimmt die Nachbearbeitung des Gemini-Outputs ins Writer-Format. Der User öffnet **selbstständig** Google AI Studio / NotebookLM im Browser und führt die Prompts dort aus. **Produziert keinen Fließtext** — das ist Phase 4.
 
 **Input:** Recherche-Protokoll + indexiertes NotebookLM-Notebook
 **Output:** `02-quellen/Auswertung_Kapitel_[X]_*.md` im Format, das der Writer erwartet
-**Tools:** Gemini (via Gem in Google AI Studio / NotebookLM), Claude nur für Anleitung + Nachbearbeitung
+**Tools:** Claude (Anleitung + Nachbearbeitung), User bedient Gemini / Google AI Studio selbstständig im Browser
 
 ### Phase 4 — Schreiben (`bachelorarbeit-writer`)
 Schreibt **ein Kapitel pro Lauf** im wissenschaftlichen Stil mit Harvard-Zitierung und Obsidian-Wiki-Links. Beachtet Kapiteltyp (Einleitung/Theorie/Methodik/Ergebnisse/Diskussion/Fazit) und Nachbarkapitel. **Gate:** Startet nur, wenn die Quellenauswertung vorliegt.
@@ -178,8 +178,7 @@ bachelor/                          ← Obsidian Vault Root + Git-Repo
 │       │   └── references/         ← Harvard-Stil, Argumentationsstrukturen
 │       ├── bachelorarbeit-reviewer/SKILL.md
 │       ├── bachelorarbeit-ueberarbeitung/SKILL.md
-│       ├── bachelorarbeit-finalisierung/SKILL.md
-│       └── notebooklm/SKILL.md     ← NotebookLM-CLI-Referenz
+│       └── bachelorarbeit-finalisierung/SKILL.md
 ├── 01-docs/
 │   ├── Gliederung.md              ← Aus Phase 1
 │   └── BA-*-Muster.md             ← Vorlagen

@@ -1,7 +1,7 @@
 ---
 name: bachelorarbeit-onboarding
 description: |
-  Prüft ob alle Voraussetzungen für die Bachelorarbeit-Pipeline erfüllt sind: richtiger Ordner ausgewählt, Ordnerstruktur vorhanden, Internetzugang, NotebookLM-Account und CLI installiert, Humanizer verfügbar, Sub-Skills vorhanden. Nutze diesen Skill beim allerersten Start, bei "Setup", "Onboarding", "Einrichten", "alles bereit?", "kann es losgehen?", "Voraussetzungen prüfen", "Check", "Environment prüfen" oder wenn der User zum ersten Mal die Bachelorarbeit-Pipeline nutzt. Auch bei Fehlern in anderen Skills diesen Skill zur Diagnose verwenden.
+  Prüft ob alle Voraussetzungen für die Bachelorarbeit-Pipeline erfüllt sind: richtiger Ordner ausgewählt, Ordnerstruktur vorhanden, Internetzugang, Humanizer verfügbar, Sub-Skills vorhanden. Nutze diesen Skill beim allerersten Start, bei "Setup", "Onboarding", "Einrichten", "alles bereit?", "kann es losgehen?", "Voraussetzungen prüfen", "Check", "Environment prüfen" oder wenn der User zum ersten Mal die Bachelorarbeit-Pipeline nutzt. Auch bei Fehlern in anderen Skills diesen Skill zur Diagnose verwenden.
 ---
 
 # Bachelorarbeit — Onboarding & System-Check
@@ -59,7 +59,7 @@ bachelor/
 ## Check 2: Internetzugang
 
 **Was prüfen:**
-Claude braucht Internetzugang für NotebookLM-Befehle und Web-Recherche.
+Claude braucht Internetzugang für Web-Recherche und Quellensuche.
 
 **Wie prüfen:**
 ```bash
@@ -72,53 +72,22 @@ curl -s --max-time 10 -o /dev/null -w "%{http_code}" https://www.google.com
 
 ---
 
-## Check 3: NotebookLM CLI installiert
+## Check 3: Google-Account für NotebookLM & Gemini
 
 **Was prüfen:**
-Die `notebooklm` CLI muss installiert sein (Python-Paket `notebooklm-py`).
+Der User braucht einen Google-Account, um NotebookLM und Google AI Studio (Gemini) nutzen zu können. Diese Tools werden in Phase 2 (Recherche) und Phase 3 (Quellenauswertung) vom User **manuell im Browser** bedient — Claude gibt Anleitungen und Prompts, aber die Navigation und Bedienung liegt beim User.
 
 **Wie prüfen:**
-```bash
-which notebooklm 2>/dev/null || pip show notebooklm-py 2>/dev/null
-```
-
-Und Version prüfen:
-```bash
-notebooklm --version 2>/dev/null
-```
+Frage den User: "Hast du einen Google-Account, mit dem du auf NotebookLM (notebooklm.google.com) und Google AI Studio (aistudio.google.com) zugreifen kannst?"
 
 **Ergebnis:**
-- ✅ wenn der Befehl existiert und eine Version zurückgibt
-- ❌ wenn nicht installiert → biete Installation an:
-  ```bash
-  pip install notebooklm-py --break-system-packages
-  ```
+- ✅ wenn der User bestätigt
+- ⚠️ wenn der User unsicher ist → weise ihn an, sich unter notebooklm.google.com einzuloggen und zu prüfen, ob er Zugang hat
+- ❌ wenn der User keinen Google-Account hat → er muss einen erstellen
 
 ---
 
-## Check 4: NotebookLM-Account authentifiziert
-
-**Was prüfen:**
-Der User muss mit einem Google-Account bei NotebookLM eingeloggt sein.
-
-**Wie prüfen:**
-```bash
-notebooklm status
-```
-
-Und detaillierter:
-```bash
-notebooklm auth check --json
-```
-
-**Ergebnis:**
-- ✅ wenn `status` eine Email-Adresse anzeigt und auth check alle Checks besteht
-- ⚠️ wenn installiert aber nicht eingeloggt → weise den User an: `notebooklm login` (öffnet Browser)
-- ❌ wenn NotebookLM nicht installiert ist (Check 3 muss zuerst bestanden werden)
-
----
-
-## Check 5: Humanizer verfügbar
+## Check 4: Humanizer verfügbar
 
 **Was prüfen:**
 Der Humanizer-Skill muss als Referenz im Plugin vorhanden sein.
@@ -142,33 +111,35 @@ ls ~/.claude/skills/humanizer/SKILL.md 2>/dev/null
 
 ---
 
-## Check 6: Sub-Skills vorhanden
+## Check 5: Sub-Skills vorhanden
 
 **Was prüfen:**
-Alle fünf Kern-Skills der Pipeline müssen verfügbar sein.
+Alle Kern-Skills der Pipeline müssen verfügbar sein.
 
 **Wie prüfen:**
 Suche nach diesen Dateien im `.claude/skills/`-Ordner:
 
 | Skill | Datei |
 |-------|-------|
-| Planung | `bachelorarbeit-planung-SKILL.md` |
-| Writer | `bachelorarbeit-writer-SKILL.md` |
-| Reviewer | `bachelorarbeit-reviewer-SKILL.md` |
-| Überarbeitung | `bachelorarbeit-ueberarbeitung-SKILL.md` |
-| Finalisierung | `bachelorarbeit-finalisierung-SKILL.md` |
+| Planung | `bachelorarbeit-planung/SKILL.md` |
+| Recherche | `bachelorarbeit-recherche/SKILL.md` |
+| Quellenauswertung | `bachelorarbeit-quellenauswertung/SKILL.md` |
+| Writer | `bachelorarbeit-writer/SKILL.md` |
+| Reviewer | `bachelorarbeit-reviewer/SKILL.md` |
+| Überarbeitung | `bachelorarbeit-ueberarbeitung/SKILL.md` |
+| Finalisierung | `bachelorarbeit-finalisierung/SKILL.md` |
 
 **Ergebnis:**
-- ✅ wenn alle fünf gefunden werden
+- ✅ wenn alle sieben gefunden werden
 - ⚠️ wenn einige fehlen → liste die fehlenden auf und prüfe ob sie als .skill-Dateien vorhanden sind (können entpackt werden)
 - ❌ wenn keiner gefunden wird → der User muss die Skills zuerst installieren
 
 ---
 
-## Check 7: Python-Umgebung
+## Check 6: Python-Umgebung
 
 **Was prüfen:**
-Python 3 muss verfügbar sein (wird für NotebookLM CLI und diverse Skripte benötigt).
+Python 3 muss verfügbar sein (wird für diverse Skripte in der Finalisierungsphase benötigt).
 
 **Wie prüfen:**
 ```bash
@@ -181,20 +152,19 @@ python3 --version 2>/dev/null || python --version 2>/dev/null
 
 ---
 
-## Check 8: Bestehender Fortschritt
+## Check 7: Bestehender Fortschritt
 
 **Was prüfen:**
 Ob der User bereits Fortschritt gemacht hat (um die richtige Phase zu empfehlen).
 
 **Wie prüfen:**
-1. Existiert `Forschungsfrage.md`? → Phase 1 (Planung) begonnen
+1. Existiert `Forschungsfrage.md` oder `BA_Forschungsfrage.md`? → Phase 1 (Planung) begonnen
 2. Existiert `Gliederung.md`? → Phase 1 (Planung) weiter fortgeschritten
 3. Existieren `Recherche_Kapitel_*.md` in `02-quellen/`? → Phase 2 (Recherche) begonnen
-4. Existieren `BA_Quellenauswertung_Kapitel_*.md` in `02-quellen/`? → Phase 3 (Auswertung) begonnen
+4. Existieren `Auswertung_Kapitel_*.md` in `02-quellen/`? → Phase 3 (Auswertung) begonnen
 5. Dateien in `03-text/`? → Phase 4 (Schreiben) begonnen
 6. Dateien in `05-review/`? → Phase 5 (Review) begonnen
 7. Dateien in `06-final/`? → Phase 7 (Finalisierung) begonnen
-8. `notebooklm list --json` → Prüfe ob ein BA-Notebook existiert
 
 **Ergebnis:**
 - Zeige eine Übersicht des aktuellen Stands
@@ -212,14 +182,13 @@ BACHELORARBEIT — System-Check Ergebnis
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ Ordner          bachelor/ korrekt ausgewählt
 ✅ Internet         Verbindung aktiv
-✅ NotebookLM CLI   v0.3.4 installiert
-✅ NotebookLM Auth  Eingeloggt als user@gmail.com
+✅ Google-Account   User hat Zugang zu NotebookLM & AI Studio
 ✅ Humanizer        Referenz vorhanden
-✅ Sub-Skills       5/5 gefunden
+✅ Sub-Skills       7/7 gefunden
 ✅ Python           3.11.2
 ⚠️ Fortschritt      Kein bisheriger Fortschritt
 
-Ergebnis: 7/8 Checks bestanden, 1 Hinweis
+Ergebnis: 6/7 Checks bestanden, 1 Hinweis
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 → Alles bereit! Starte mit Phase 1: Planung
 ```
@@ -234,7 +203,6 @@ Falls kritische Checks (❌) fehlschlagen:
 
 Biete dem User an, behebbare Probleme automatisch zu lösen:
 - Ordnerstruktur erstellen → Ordner anlegen
-- NotebookLM installieren → `pip install notebooklm-py`
 - Humanizer installieren → von GitHub klonen
 - `Fortschritt.md` erstellen → Initiale Datei anlegen
 

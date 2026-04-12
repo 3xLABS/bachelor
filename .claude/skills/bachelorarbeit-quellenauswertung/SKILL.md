@@ -1,15 +1,15 @@
 ---
 name: bachelorarbeit-quellenauswertung
 description: >
-  Phase 3 der Bachelorarbeit-Pipeline: Leitet den User durch die Quellenauswertung mit Gemini (via NotebookLM oder Gem). Claude liefert Anleitung, kapitelspezifische Prompts und die Gem-Systemprompt, der User führt die Auswertung in Gemini durch, Claude hilft beim Nachbearbeiten ins Writer-Format. Spart Token, weil die eigentliche Analyse bei Gemini läuft. Nutze bei: "Quellen auswerten", "Literatur analysieren", "was sagen die Quellen zu", "Quellenauswertung", "Literaturanalyse", "Quellen zusammenfassen", "Quellen vergleichen", "was steht in den Papers", "extrahiere die Kernaussagen", "erstelle eine Quellenübersicht", "werte die Quellen aus", "Gem erstellen", "Gemini Auswertung". Nicht für Quellensuche — dafür gibt es `bachelorarbeit-recherche`.
+  Phase 3 der Bachelorarbeit-Pipeline: Leitet den User durch die Quellenauswertung mit Gemini und NotebookLM. Der User hat seine Quellen bereits in einem NotebookLM-Notebook gesammelt (Phase 2). Jetzt öffnet er Gemini im Browser, verknüpft das Notebook, und wertet die Quellen dort mit vorbereiteten Prompts von Claude aus. Claude liefert die Prompts und den Gem-Systemprompt, der User führt alles im Browser durch, und Claude übernimmt die Nachbearbeitung des Gemini-Outputs ins Writer-Format. Spart Token, weil die eigentliche Analyse bei Gemini läuft. Nutze bei: "Quellen auswerten", "Literatur analysieren", "was sagen die Quellen zu", "Quellenauswertung", "Literaturanalyse", "Quellen zusammenfassen", "Quellen vergleichen", "was steht in den Papers", "extrahiere die Kernaussagen", "erstelle eine Quellenübersicht", "werte die Quellen aus", "Gem erstellen", "Gemini Auswertung". Nicht für Quellensuche — dafür gibt es `bachelorarbeit-recherche`.
 ---
 
 # Bachelorarbeit — Phase 3: Quellenauswertung (via Gemini)
 
-Die Quellenauswertung läuft **nicht in Claude**, sondern in **Gemini** — entweder über einen dedizierten Gem oder direkt im NotebookLM-Chat. Das spart Token und nutzt Geminis Stärke: es hat direkten Zugriff auf die indexierten Quellen in NotebookLM.
+Die Quellenauswertung läuft **nicht in Claude**, sondern in **Gemini** — der User bedient Gemini und NotebookLM selbstständig im Browser. Das spart Token und nutzt Geminis Stärke: über die NotebookLM-Verknüpfung hat Gemini direkten Zugriff auf alle indexierten Quellen.
 
 **Claudes Rolle in Phase 3:**
-1. **Vorbereitung:** Gem-Setup-Anleitung, kapitelspezifische Prompts generieren
+1. **Vorbereitung:** Gem-Systemprompt bereitstellen, kapitelspezifische Prompts generieren
 2. **Nachbearbeitung:** Gemini-Output ins exakte Format bringen, das der Writer-Skill (Phase 4) erwartet
 
 **Claudes Rolle ist NICHT:** Die Quellen selbst zu lesen oder auszuwerten. Das macht Gemini.
@@ -17,13 +17,17 @@ Die Quellenauswertung läuft **nicht in Claude**, sondern in **Gemini** — entw
 ## Übersicht: Workflow
 
 ```
-Claude                          User                           Gemini
-──────                          ────                           ──────
-1. Gem-Setup-Anleitung    →     User erstellt Gem              
-2. Kapitel-Prompts        →     User gibt Prompts in Gem  →   Gemini analysiert Quellen
-                                User kopiert Output       →   
-3. Nachbearbeitung        ←     User gibt Output an Claude
-4. Fertige Auswertung     →     Datei in 02-quellen/
+Claude                          User (im Browser)                Gemini
+──────                          ─────────────────                ──────
+1. Gem-Systemprompt +           User erstellt Gem in Gemini
+   Schritt-für-Schritt      →  User verknüpft NotebookLM     
+   Anleitung                    Notebook mit Gemini
+
+2. Kapitel-Prompts           →  User gibt Prompts ein         → Gemini analysiert Quellen
+                                                                 anhand des Notebooks
+                                User kopiert Markdown-Output  →   
+3. Nachbearbeitung           ←  User gibt Output an Claude
+4. Fertige Auswertung        →  Datei in 02-quellen/
 ```
 
 ## Ablauf
@@ -32,34 +36,63 @@ Claude                          User                           Gemini
 
 Bevor du startest, lies:
 - `01-docs/Gliederung.md` — Welches Kapitel wird ausgewertet?
-- `02-quellen/Forschungsfrage.md` — Worauf arbeitet alles hin?
+- `02-quellen/Forschungsfrage.md` oder `02-quellen/BA_Forschungsfrage.md` — Worauf arbeitet alles hin?
 - `02-quellen/Recherche_Kapitel_[X]_*.md` — Welche Quellen liegen vor? (aus Phase 2)
 
 Falls die Recherche für das Kapitel noch nicht abgeschlossen ist → zurück zu Phase 2 (`bachelorarbeit-recherche`).
 
-### Schritt 2: Gem erstellen (einmalig)
+### Schritt 2: NotebookLM + Gemini verknüpfen (einmalig)
 
-Der User muss einmalig einen Gem in Google AI Studio erstellen. Leite ihn Schritt für Schritt an:
+Das ist der zentrale Schritt — hier verbindet der User seine gesammelten Quellen mit Gemini. Es gibt zwei Wege, und Claude erklärt dem User beide:
 
-**Anleitung für den User:**
+#### Weg A: Gem in Gemini erstellen und Notebook verknüpfen (empfohlen)
 
-> **Gem erstellen — Schritt für Schritt:**
+Gib dem User diese Anleitung:
+
+> **NotebookLM-Quellen mit Gemini verbinden — Schritt für Schritt:**
 >
-> 1. Öffne [Google AI Studio](https://aistudio.google.com/) → Melde dich mit deinem Google-Konto an
-> 2. Klicke links auf **„Gems"** (oder gehe direkt zu aistudio.google.com/gems)
-> 3. Klicke **„New Gem"** / **„Neuer Gem"**
-> 4. **Name:** `BA Quellenauswertung`
-> 5. **Systemprompt:** Kopiere den Inhalt, den Claude dir gleich gibt, komplett in das Systemprompt-Feld
-> 6. Klicke **„Save"** / **„Speichern"**
-> 7. Fertig — der Gem ist jetzt in deiner Gem-Liste und kann mit NotebookLM-Notebooks verbunden werden
+> **Teil 1: Gem erstellen**
+> 1. Öffne [gemini.google.com](https://gemini.google.com) in deinem Browser
+> 2. Melde dich mit dem **gleichen Google-Konto** an, das du für NotebookLM benutzt
+> 3. Klicke links in der Seitenleiste auf **„Gem Manager"** oder **„Gems"**
+> 4. Klicke **„Neuen Gem erstellen"** / **„New Gem"**
+> 5. **Name:** `BA Quellenauswertung`
+> 6. **Anweisungen / Instructions:** Kopiere den Systemprompt, den ich dir gleich gebe, komplett in dieses Feld
+> 7. Klicke **„Speichern"** / **„Save"**
+>
+> **Teil 2: NotebookLM-Notebook verknüpfen**
+> 1. Öffne deinen neuen Gem (klicke auf „BA Quellenauswertung" in der Gem-Liste)
+> 2. Unten links im Chat-Eingabefeld siehst du einen **+**-Button
+> 3. Klicke darauf und wähle **„NotebookLM"** als Quelle
+> 4. Wähle dein BA-Notebook aus der Liste
+> 5. Jetzt hat Gemini Zugriff auf alle Quellen in deinem Notebook
+>
+> **Fertig!** Du kannst jetzt im Gem-Chat Fragen zu deinen Quellen stellen, und Gemini antwortet basierend auf den Dokumenten im Notebook.
+>
+> Bestätige mir, wenn der Gem erstellt und das Notebook verknüpft ist.
 
-Gib dem User dann den Inhalt der Datei `references/gem-systemprompt.md` als Copy-Paste-Block. Lies dazu:
+Gib dem User dann den Inhalt der Datei `references/gem-systemprompt.md` als Copy-Paste-Block für das Anweisungen-Feld. Lies dazu:
 
 ```
 .claude/skills/bachelorarbeit-quellenauswertung/references/gem-systemprompt.md
 ```
 
-**Wichtig:** Der Gem muss nur einmal erstellt werden. Bei weiteren Kapiteln nutzt der User denselben Gem.
+#### Weg B: Direkt in NotebookLM chatten (einfacher, aber weniger steuerbar)
+
+Falls der User den Gem-Weg zu kompliziert findet:
+
+> **Alternative: Direkt in NotebookLM auswerten**
+>
+> 1. Öffne [notebooklm.google.com](https://notebooklm.google.com)
+> 2. Öffne dein BA-Notebook
+> 3. Wähle links die Quellen aus, die zu diesem Kapitel gehören (Häkchen setzen)
+> 4. Nutze den **Chat** unten, um die Prompts einzugeben, die ich dir gleich gebe
+>
+> Nachteil: Ohne den Gem-Systemprompt gibt Gemini die Antworten nicht im exakten Auswertungsformat aus. Du musst dann ggf. nachfragen oder Claude macht mehr Nachbearbeitung.
+
+**Empfehlung:** Weg A (Gem), weil der Systemprompt dafür sorgt, dass Gemini die Quellen gleich im richtigen Format auswertet — mit Seitenangaben, Harvard-Zitierung und strukturierten Argumentationsketten.
+
+**Wichtig:** Der Gem und die Notebook-Verknüpfung müssen nur **einmal** eingerichtet werden. Bei weiteren Kapiteln öffnet der User einfach denselben Gem.
 
 ### Schritt 3: Kapitelspezifische Prompts generieren
 
@@ -79,7 +112,7 @@ Die Forschungsfrage lautet: "[Forschungsfrage]"
 Dieses Kapitel soll folgende Unterkapitel abdecken:
 [Unterkapitel aus Gliederung auflisten]
 
-Nutze EXAKT das Ausgabeformat aus deiner Systemprompt. Gehe alle relevanten Quellen im Notebook durch und werte sie kapitelspezifisch aus. Achte besonders auf:
+Gehe alle relevanten Quellen im Notebook durch und werte sie kapitelspezifisch aus. Gib die Antwort als vollständiges Markdown-Dokument aus. Achte besonders auf:
 - Kernaussagen mit Seitenangaben
 - Verwendbare direkte Zitate
 - Argumentationsketten
@@ -96,7 +129,7 @@ Durchsuche alle Quellen nach Definitionen für folgende Begriffe, die in Kapitel
 2. [Begriff 2]
 3. [Begriff 3]
 
-Für jeden Begriff: Alle Definitionen mit Autor, Jahr, Seite. Gemeinsamkeiten, Unterschiede, und eine Empfehlung für die Arbeitsdefinition.
+Für jeden Begriff: Alle Definitionen mit Autor, Jahr, Seite. Gemeinsamkeiten, Unterschiede, und eine Empfehlung für die Arbeitsdefinition. Formatiere die Antwort als Markdown.
 ```
 
 #### Prompt C — Argumentationsketten
@@ -106,7 +139,7 @@ Baue eine wissenschaftliche Argumentationskette für Kapitel [X]: "[Kapiteltitel
 
 Die zentrale These dieses Kapitels: "[These — aus Gliederung/Forschungsfrage ableiten]"
 
-Für jedes Argument: Claim → Reason → Evidence (mit konkreten Quellen und Seitenangaben). Zeige auch Gegenargumente und eine Synthese.
+Für jedes Argument: Claim → Reason → Evidence (mit konkreten Quellen und Seitenangaben). Zeige auch Gegenargumente und eine Synthese. Formatiere als Markdown.
 ```
 
 #### Prompt D — Methodik-Auswertung (nur für Methodenkapitel)
@@ -116,7 +149,7 @@ Werte die methodenbezogenen Quellen für mein Methodenkapitel aus.
 
 Geplante Methode: [Methode aus Gliederung]
 
-Liefere:
+Liefere als Markdown-Dokument:
 1. Methodenbeschreibung (mit Seitenangaben)
 2. Begründung für den Einsatz bei meiner Forschungsfrage
 3. Ablauf/Schritte laut Quellen
@@ -133,6 +166,8 @@ Analysiere die Quellen zu Kapitel [X] auf:
 1. Wo widersprechen sich Autoren? Wer vertritt welche Position? Welche ist besser belegt?
 2. Welche Aspekte von [Kapitelthema] werden NICHT oder nur unzureichend abgedeckt?
 3. Gibt es einen erkennbaren Forschungstrend oder Paradigmenwechsel?
+
+Formatiere als Markdown mit klaren Überschriften.
 ```
 
 #### Prompt F — Diskussionsvorbereitung (nur für Diskussionskapitel)
@@ -146,7 +181,7 @@ Bereite mein Diskussionskapitel vor:
 4. Limitationen ähnlicher Studien
 5. Offene Fragen und Forschungsbedarf
 
-Immer mit konkreten Quellenbelegen (Autor, Jahr, Seite).
+Immer mit konkreten Quellenbelegen (Autor, Jahr, Seite). Formatiere als Markdown.
 ```
 
 **Welche Prompts du generierst, hängt vom Kapiteltyp ab:**
@@ -162,24 +197,29 @@ Immer mit konkreten Quellenbelegen (Autor, Jahr, Seite).
 
 ### Schritt 4: User führt Auswertung in Gemini durch
 
-Erkläre dem User:
+Gib dem User diese Anleitung:
 
-> **So nutzt du die Prompts:**
+> **So wertest du die Quellen aus:**
 >
-> 1. Öffne deinen **BA Quellenauswertung**-Gem in Google AI Studio
-> 2. Verbinde ihn mit deinem NotebookLM-Notebook (oder öffne NotebookLM und nutze den Gem dort)
-> 3. Gib **Prompt A** ein und warte auf die vollständige Antwort
-> 4. Gib dann die weiteren Prompts (B, C, D, E, F — je nach Kapitel) einzeln ein
-> 5. **Kopiere alle Antworten** und gib sie mir (Claude) — ich bringe sie ins richtige Format
-
-**Tipp für den User:** In NotebookLM kann der User vor dem Chat bestimmte Quellen auswählen (Häkchen setzen), um die Antwort auf die kapitelrelevanten Quellen einzuschränken.
+> 1. Öffne deinen **BA Quellenauswertung**-Gem in Gemini (gemini.google.com → Gems → BA Quellenauswertung)
+> 2. Stelle sicher, dass dein NotebookLM-Notebook verknüpft ist (du siehst es als Kontext-Quelle im Chat)
+> 3. Kopiere **Prompt A** und füge ihn in den Chat ein → warte auf die vollständige Antwort
+> 4. Gib dann die weiteren Prompts (B, C, D, E, F — je nach Kapitel) **einzeln** ein
+> 5. **Wichtig — Markdown-Output sichern:**
+>    - Markiere die gesamte Antwort von Gemini und kopiere sie
+>    - Oder klicke auf das **Kopieren-Symbol** neben der Antwort
+>    - Gib die kopierten Antworten hier bei mir (Claude) ein — ich bringe sie ins richtige Format
+>
+> **Tipp:** Falls eine Antwort zu lang wird und Gemini abbricht, sage "Fahre fort" oder "Bitte den Rest ausgeben".
+>
+> **Tipp für NotebookLM-Weg:** Wenn du direkt in NotebookLM arbeitest statt im Gem, kannst du vor dem Chat bestimmte Quellen auswählen (Häkchen setzen), um die Antwort auf die kapitelrelevanten Quellen einzuschränken.
 
 ### Schritt 5: Nachbearbeitung (Claude)
 
 Wenn der User den Gemini-Output zurückbringt, machst du Folgendes:
 
 1. **Prüfe die Struktur:** Entspricht der Output dem Format, das der Writer-Skill erwartet? (Siehe Template unten)
-2. **Ergänze fehlende Abschnitte:** Falls Gemini einen Abschnitt ausgelassen hat (z.B. Argumentationsketten, Forschungslücken), weise darauf hin
+2. **Ergänze fehlende Abschnitte:** Falls Gemini einen Abschnitt ausgelassen hat (z.B. Argumentationsketten, Forschungslücken), weise darauf hin und schlage einen Nachfrage-Prompt für Gemini vor
 3. **Markierungen setzen:**
    - `[SEITE PRÜFEN]` bei Seitenangaben, die verdächtig rund oder unplausibel wirken
    - `[QUELLE ERGÄNZEN]` bei Aspekten, die keine Quellenabdeckung haben
@@ -243,7 +283,7 @@ Wenn die Auswertung für ein Kapitel abgeschlossen ist:
 
 ## Zusammenspiel mit anderen Skills
 
-- **Vor Phase 3** → `bachelorarbeit-recherche` sammelt die Quellen
+- **Vor Phase 3** → `bachelorarbeit-recherche` sammelt die Quellen im NotebookLM-Notebook (User im Browser)
 - **Nach Phase 3** → `bachelorarbeit-writer` nutzt die Auswertung als Schreibgrundlage
-- **Zurück zu Phase 2** → Bei unzureichender Quellenlage Nachrecherche starten
+- **Zurück zu Phase 2** → Bei unzureichender Quellenlage Nachrecherche starten (User recherchiert selbst in NotebookLM im Browser)
 - **Beim Review (Phase 5)** → Der Reviewer prüft, ob die Quellen korrekt eingearbeitet wurden

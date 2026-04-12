@@ -70,7 +70,7 @@ Dies ist der **wichtigste Schritt der gesamten Planung** — die Forschungsfrage
 
 **Vorgehen:**
 1. Lies, was der User zum Thema hat (Notizen, Ideen, Betreuer-Hinweise)
-2. Prüfe, ob im Arbeitsverzeichnis bereits eine Forschungsfrage oder ein Muster existiert (`04-quellen/Forschungsfrage.md`, `04-quellen/BA_Forschungsfrage.md`)
+2. Prüfe, ob im Arbeitsverzeichnis bereits eine Forschungsfrage oder ein Muster existiert (`02-quellen/Forschungsfrage.md`, `02-quellen/BA_Forschungsfrage.md`)
 3. Entwickle mit dem User iterativ eine präzise Forschungsfrage
 
 **Anforderungen an eine gute Forschungsfrage:**
@@ -83,7 +83,7 @@ Dies ist der **wichtigste Schritt der gesamten Planung** — die Forschungsfrage
 - Eine Hauptforschungsfrage (die zentrale Frage der Arbeit)
 - 2–3 Unterforschungsfragen (optional, strukturieren die Hauptfrage)
 
-**Speichern als `04-quellen/Forschungsfrage.md`** mit:
+**Speichern als `02-quellen/Forschungsfrage.md`** mit:
 - Die Forschungsfrage(n)
 - Kurze Herleitung (warum diese Frage relevant ist — wissenschaftlich + praktisch)
 - Abgrenzung (was die Arbeit NICHT untersucht)
@@ -94,7 +94,7 @@ Dies ist der **wichtigste Schritt der gesamten Planung** — die Forschungsfrage
 Mit der Forschungsfrage steht das Ziel — jetzt der Weg dorthin.
 
 **Vorgehen:**
-1. Prüfe, ob Muster-Gliederungen vorliegen (`03-docs/BA-Gliederung-Muster.md`, `03-docs/BA-Struktur-Muster.md`). Falls ja, lies sie und nutze sie als Strukturvorlage.
+1. Prüfe, ob Muster-Gliederungen vorliegen (`01-docs/BA-Gliederung-Muster.md`, `01-docs/BA-Struktur-Muster.md`). Falls ja, lies sie und nutze sie als Strukturvorlage.
 2. Erstelle eine Gliederung, die auf die konkrete Forschungsfrage zugeschnitten ist
 3. Weise jedem Kapitel Seitenzahlen zu (basierend auf dem Gesamtumfang)
 
@@ -116,16 +116,16 @@ Mit der Forschungsfrage steht das Ziel — jetzt der Weg dorthin.
 - Kein Kapitel mit nur einem Unterkapitel (wenn 3.1, dann auch 3.2)
 - Seitenzahlen addieren sich zum Gesamtumfang
 
-**Speichern als `03-docs/Gliederung.md`.**
+**Speichern als `01-docs/Gliederung.md`.**
 
 ## Schritt 4: Ordnerstruktur anlegen
 
 Lege auf Basis der Gliederung die Obsidian-Ordnerstruktur an, damit die nächsten Skills sofort arbeiten können.
 
-**Für jedes Hauptkapitel einen Unterordner in `05-text/`:**
+**Für jedes Hauptkapitel einen Unterordner in `03-text/`:**
 
 ```
-05-text/
+03-text/
 ├── 01-Einleitung/
 ├── 02-Theoretischer Rahmen/
 ├── 03-Methodik/
@@ -138,26 +138,26 @@ Lege auf Basis der Gliederung die Obsidian-Ordnerstruktur an, damit die nächste
 
 ```
 bachelor/                        ← Obsidian Vault Root
-├── 01-claude/
-│   └── CLAUDE.md                ← Pipeline-Orchestrierung
-├── 02-skills/                   ← Alle .skill-Dateien
-├── 03-docs/
+├── .claude/
+│   ├── CLAUDE.md                ← Pipeline-Orchestrierung
+│   └── skills/                  ← Alle .skill-Dateien
+├── 01-docs/
 │   └── Gliederung.md            ← Aus Schritt 3
-├── 04-quellen/
+├── 02-quellen/
 │   ├── Forschungsfrage.md       ← Aus Schritt 2
 │   ├── Quellenverzeichnis.md    ← Kommt in Phase 2 (Recherche)
 │   └── Auswertung_KapX_*.md     ← Kommt in Phase 3 (Quellenauswertung)
-├── 05-text/                     ← Aus Schritt 4
+├── 03-text/                     ← Aus Schritt 4
 │   └── XX-Kapitelname/
-├── 06-fortschritt/
+├── 04-fortschritt/
 │   └── Fortschritt.md           ← Aus Schritt 5
-├── 07-review/                   ← Wird vom Reviewer befüllt
-└── 08-final/                    ← Wird vom Finalisierer befüllt
+├── 05-review/                   ← Wird vom Reviewer befüllt
+└── 06-final/                    ← Wird vom Finalisierer befüllt
 ```
 
 ## Schritt 5: Zeitplanung und Fortschritt.md
 
-Erstelle eine Rückwärtsplanung basierend auf dem Abgabedatum und initialisiere die `06-fortschritt/Fortschritt.md`.
+Erstelle eine Rückwärtsplanung basierend auf dem Abgabedatum und initialisiere die `04-fortschritt/Fortschritt.md`.
 
 **Faustregel für die Zeitverteilung:**
 
@@ -175,7 +175,7 @@ Erstelle eine Rückwärtsplanung basierend auf dem Abgabedatum und initialisiere
 3. Restliche Zeit auf die Kapitel verteilen (gewichtet nach Seitenumfang)
 4. Empfohlene Schreibreihenfolge: Theorie → Methodik → Ergebnisse → Diskussion → Einleitung → Fazit
 
-**`06-fortschritt/Fortschritt.md` initialisieren:**
+**`04-fortschritt/Fortschritt.md` initialisieren:**
 
 ```markdown
 # Fortschritt Bachelorarbeit
@@ -241,10 +241,10 @@ Ausstehend → Erster Entwurf → Reviewed → Überarbeitet → Final
 Wenn alle Schritte abgeschlossen sind, prüfe die Bereitschaft und übergib sauber an den Recherche-Skill.
 
 **Checkliste vor Handoff:**
-- [ ] `04-quellen/Forschungsfrage.md` existiert und ist scharf formuliert
-- [ ] `03-docs/Gliederung.md` existiert mit Seitenzahlen pro Kapitel
-- [ ] `05-text/XX-Kapitelname/` Unterordner sind für alle Kapitel angelegt
-- [ ] `06-fortschritt/Fortschritt.md` ist initialisiert mit Pipeline-Status und Zeitplanung
+- [ ] `02-quellen/Forschungsfrage.md` existiert und ist scharf formuliert
+- [ ] `01-docs/Gliederung.md` existiert mit Seitenzahlen pro Kapitel
+- [ ] `03-text/XX-Kapitelname/` Unterordner sind für alle Kapitel angelegt
+- [ ] `04-fortschritt/Fortschritt.md` ist initialisiert mit Pipeline-Status und Zeitplanung
 - [ ] Forschungsfrage und Gliederung sind inhaltlich konsistent
 
 **Handoff-Nachricht an den User:**
@@ -265,9 +265,9 @@ Wenn alle Schritte abgeschlossen sind, prüfe die Bereitschaft und übergib saub
 
 Prüfe immer zuerst, ob im Arbeitsverzeichnis bereits Vorlagen liegen:
 
-- `03-docs/BA-Gliederung-Muster.md` → Strukturvorlage für die Gliederung
-- `03-docs/BA-Struktur-Muster.md` → Kapitelaufteilung und Seitenanteile
-- `04-quellen/BA_Forschungsfrage.md` → Qualitätsbeispiel für Forschungsfragen
+- `01-docs/BA-Gliederung-Muster.md` → Strukturvorlage für die Gliederung
+- `01-docs/BA-Struktur-Muster.md` → Kapitelaufteilung und Seitenanteile
+- `02-quellen/BA_Forschungsfrage.md` → Qualitätsbeispiel für Forschungsfragen
 
 Nutze sie als Referenz für Format und Tiefe.
 

@@ -13,22 +13,22 @@ Die Skills wissen nicht, wo sie ihre Dateien ablegen sollen. Das ist das größt
 
 | Skill | Sagt wo Dateien hin sollen | Obsidian-Struktur sagt |
 |---|---|---|
-| **Writer** | "im selben Verzeichnis" (unspezifisch) | `05-text/XX-Kapitelname/` |
-| **Reviewer** | "Speichere als `review_kapitel_X_Y.md`" (kein Ordner) | `07-review/` |
-| **Überarbeitung** | "Speichere mit Suffix `_v2`" (kein Ordner) | `05-text/XX-Kapitelname/` |
-| **Finalisierung** | "`bachelorarbeit_final.docx`" (kein Ordner) | `08-final/` |
-| **Writer** (Fortschritt) | "im selben Verzeichnis wie Kapitel" | `06-fortschritt/Fortschritt.md` |
+| **Writer** | "im selben Verzeichnis" (unspezifisch) | `03-text/XX-Kapitelname/` |
+| **Reviewer** | "Speichere als `review_kapitel_X_Y.md`" (kein Ordner) | `05-review/` |
+| **Überarbeitung** | "Speichere mit Suffix `_v2`" (kein Ordner) | `03-text/XX-Kapitelname/` |
+| **Finalisierung** | "`bachelorarbeit_final.docx`" (kein Ordner) | `06-final/` |
+| **Writer** (Fortschritt) | "im selben Verzeichnis wie Kapitel" | `04-fortschritt/Fortschritt.md` |
 
 **Risiko:** Jeder Skill legt Dateien woanders ab. Der nächste Skill in der Pipeline findet sie nicht.
 
 ### Fix
 
 Jeden Skill explizit auf die Obsidian-Ordnerstruktur referenzieren:
-- Writer: Speichere in `05-text/[Kapitelordner]/`
-- Reviewer: Speichere in `07-review/`
-- Überarbeitung: Speichere in `05-text/[Kapitelordner]/`
-- Finalisierung: Speichere in `08-final/`
-- Fortschritt.md: Immer `06-fortschritt/Fortschritt.md`
+- Writer: Speichere in `03-text/[Kapitelordner]/`
+- Reviewer: Speichere in `05-review/`
+- Überarbeitung: Speichere in `03-text/[Kapitelordner]/`
+- Finalisierung: Speichere in `06-final/`
+- Fortschritt.md: Immer `04-fortschritt/Fortschritt.md`
 
 ---
 
@@ -66,7 +66,7 @@ Reviewer setzt immer "Reviewed" und dokumentiert in den Offenen Punkten, ob Übe
 Das Literaturverzeichnis ist eine Pflichtkomponente jeder Abschlussarbeit, aber kein Skill ist dafür verantwortlich:
 
 - **Writer** erstellt pro Kapitel eine Liste "Verwendete Quellen in diesem Kapitel" — das sind Fragmente, kein vollständiges Verzeichnis
-- **Planung** erstellt ein Quellenverzeichnis (`04-quellen/Quellenverzeichnis.md`), aber im Perplexity-Format (Autor, Titel, Jahr, URL, Kurzbeschreibung) — nicht im Harvard-Bibliographieformat
+- **Planung** erstellt ein Quellenverzeichnis (`02-quellen/Quellenverzeichnis.md`), aber im Perplexity-Format (Autor, Titel, Jahr, URL, Kurzbeschreibung) — nicht im Harvard-Bibliographieformat
 - **Finalisierung** sagt "Falls ein Literaturverzeichnis vorliegt, formatiere es" — aber wer erstellt es?
 
 **Ergebnis:** Der User kommt zur Finalisierung und hat kein korrekt formatiertes Literaturverzeichnis. Die Finalisierung wartet darauf, dass es "vorliegt", aber niemand hat es erzeugt.
@@ -75,7 +75,7 @@ Das Literaturverzeichnis ist eine Pflichtkomponente jeder Abschlussarbeit, aber 
 
 Zwei Optionen:
 
-**Option A:** Neuer Schritt im Überarbeitungs-Skill oder eigener Mini-Skill "Literaturverzeichnis": Sammelt alle `## Verwendete Quellen in diesem Kapitel`-Abschnitte aus allen Kapiteln, dedupliziert sie, formatiert sie im Harvard-Bibliographieformat, speichert als `04-quellen/Literaturverzeichnis.md`.
+**Option A:** Neuer Schritt im Überarbeitungs-Skill oder eigener Mini-Skill "Literaturverzeichnis": Sammelt alle `## Verwendete Quellen in diesem Kapitel`-Abschnitte aus allen Kapiteln, dedupliziert sie, formatiert sie im Harvard-Bibliographieformat, speichert als `02-quellen/Literaturverzeichnis.md`.
 
 **Option B (einfacher):** In die Finalisierung einbauen — vor der Word-Erstellung alle Kapitel scannen, alle Zitate extrahieren, Literaturverzeichnis automatisch zusammenbauen. Dafür das Quellenverzeichnis aus der Planung als Datenbasis nutzen.
 
@@ -253,7 +253,7 @@ Der Planungs-Skill definiert ein Format für kapitelweise Quellenauswertungen. D
 ### Fix
 
 Im Writer-Skill explizit referenzieren:
-- "Die Quellenauswertung liegt idealerweise im Format des Planungs-Skills vor (siehe `04-quellen/Auswertung_KapX_*.md`). Falls sie in einem anderen Format vorliegt, arbeite damit — aber weise den User darauf hin, dass das Standardformat die Qualität verbessert."
+- "Die Quellenauswertung liegt idealerweise im Format des Planungs-Skills vor (siehe `02-quellen/Auswertung_KapX_*.md`). Falls sie in einem anderen Format vorliegt, arbeite damit — aber weise den User darauf hin, dass das Standardformat die Qualität verbessert."
 
 ---
 

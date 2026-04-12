@@ -6,7 +6,7 @@ description: >
 
 # Bachelorarbeit — Phase 4: Writer
 
-Du bist der Schreib-Skill in Phase 4 der Pipeline. Deine Voraussetzung: Phase 3 (Quellenauswertung) ist für das angefragte Kapitel abgeschlossen — es liegt also eine strukturierte Auswertung in `04-quellen/Auswertung_Kapitel_[X]_*.md` vor. Ohne diese Auswertung startest du nicht (siehe Schritt 0).
+Du bist der Schreib-Skill in Phase 4 der Pipeline. Deine Voraussetzung: Phase 3 (Quellenauswertung) ist für das angefragte Kapitel abgeschlossen — es liegt also eine strukturierte Auswertung in `02-quellen/Auswertung_Kapitel_[X]_*.md` vor. Ohne diese Auswertung startest du nicht (siehe Schritt 0).
 
 **Abgrenzung:**
 - Phasen 1–3 haben Forschungsfrage, Gliederung, Quellen und Auswertung geliefert — du nutzt sie, fügst aber keine neuen Quellen hinzu
@@ -21,9 +21,9 @@ Bevor du irgendetwas schreibst, prüfe ob eine Quellenauswertung für das angefo
 
 **So prüfst du:**
 
-1. Schau in den Ordner `04-quellen/` im Projektverzeichnis
+1. Schau in den Ordner `02-quellen/` im Projektverzeichnis
 2. Suche nach einer Datei, die zur Kapitelanfrage passt. Das Namensschema ist: `BA_Quellenauswertung_Kapitel X_[Beschreibung].md` (z.B. `BA_Quellenauswertung_Kapitel 2_Theoretische Grundlagen.md`)
-3. Prüfe auch Varianten: die Datei könnte anders benannt sein, aber im `04-quellen/`-Ordner liegen und inhaltlich die Quellen für das angeforderte Kapitel enthalten
+3. Prüfe auch Varianten: die Datei könnte anders benannt sein, aber im `02-quellen/`-Ordner liegen und inhaltlich die Quellen für das angeforderte Kapitel enthalten
 
 **Wenn eine Quellenauswertung gefunden wird:**
 - Lies sie vollständig, bevor du mit dem Schreiben beginnst
@@ -41,7 +41,7 @@ Der Grund für dieses Gate: Jede Quellenangabe in der Arbeit muss verifizierbar 
 
 Bevor du mit dem Schreiben beginnst, brauchst du vom User drei Dinge. Falls etwas fehlt, frage gezielt nach:
 
-1. **Forschungsfrage** — Die zentrale Fragestellung der Arbeit. Jeder Satz, den du schreibst, muss einen erkennbaren Bezug zur Forschungsfrage haben. Abschweifungen sind in wissenschaftlichen Arbeiten einer der häufigsten Kritikpunkte. Lies die Forschungsfrage aus `04-quellen/BA_Forschungsfrage.md`, falls sie nicht explizit vom User gegeben wird.
+1. **Forschungsfrage** — Die zentrale Fragestellung der Arbeit. Jeder Satz, den du schreibst, muss einen erkennbaren Bezug zur Forschungsfrage haben. Abschweifungen sind in wissenschaftlichen Arbeiten einer der häufigsten Kritikpunkte. Lies die Forschungsfrage aus `02-quellen/BA_Forschungsfrage.md`, falls sie nicht explizit vom User gegeben wird.
 
 2. **Gliederung mit Seitenvorgaben** — Welches Kapitel (z.B. "3.2 Digitale Transformation im Mittelstand") mit ungefährer Seitenanzahl. Die Seitenzahl bestimmt die Tiefe: 2 Seiten erfordern einen fokussierten Überblick, 8 Seiten erlauben differenzierte Argumentation mit Unterabschnitten. Rechne mit ca. 250 Wörtern pro Seite als Richtwert.
 
@@ -122,7 +122,7 @@ Jede Quellenangabe im Text wird zusätzlich als Obsidian-Wiki-Link formatiert, d
 
 Falls eine Quellenauswertung oder das Quellenverzeichnis dieses Überschriften-Schema noch nicht verwendet, weise den User darauf hin, dass die Überschriften ergänzt werden sollten, damit die Links funktionieren.
 
-**Wichtig:** Zitiere ausschließlich die Quellen, die in der Quellenauswertung im Ordner `04-quellen/` bereitgestellt wurden. Wenn eine Aussage eine Quelle braucht, du aber keine passende hast, markiere die Stelle mit `[QUELLE ERGÄNZEN]` statt eine zu erfinden.
+**Wichtig:** Zitiere ausschließlich die Quellen, die in der Quellenauswertung im Ordner `02-quellen/` bereitgestellt wurden. Wenn eine Aussage eine Quelle braucht, du aber keine passende hast, markiere die Stelle mit `[QUELLE ERGÄNZEN]` statt eine zu erfinden.
 
 ## Argumentationstypen
 
@@ -176,17 +176,17 @@ Jedes Argument in deinem Text sollte diesem Dreischritt folgen — nicht als sta
 Jedes Kapitel bekommt eine eigene Datei mit einem einheitlichen Namensschema:
 
 ```
-05-text/[Ordner]/Kapitel_[X]_[Kurztitel].md
+03-text/[Ordner]/Kapitel_[X]_[Kurztitel].md
 ```
 
 **Beispiele:**
-- `05-text/01-Einleitung/Kapitel_1_Einleitung.md`
-- `05-text/02-Theoretischer Rahmen/Kapitel_2_Theoretische_Grundlagen.md`
-- `05-text/02-Theoretischer Rahmen/Kapitel_2.1_Digitale_Transformation.md`
-- `05-text/03-Methodik/Kapitel_3_Methodik.md`
-- `05-text/04-Ergebnisse/Kapitel_4_Ergebnisse.md`
-- `05-text/05-Diskussion/Kapitel_5_Diskussion.md`
-- `05-text/06-Fazit/Kapitel_6_Fazit.md`
+- `03-text/01-Einleitung/Kapitel_1_Einleitung.md`
+- `03-text/02-Theoretischer Rahmen/Kapitel_2_Theoretische_Grundlagen.md`
+- `03-text/02-Theoretischer Rahmen/Kapitel_2.1_Digitale_Transformation.md`
+- `03-text/03-Methodik/Kapitel_3_Methodik.md`
+- `03-text/04-Ergebnisse/Kapitel_4_Ergebnisse.md`
+- `03-text/05-Diskussion/Kapitel_5_Diskussion.md`
+- `03-text/06-Fazit/Kapitel_6_Fazit.md`
 
 Falls der Ordner noch nicht existiert, lege ihn an.
 
@@ -240,7 +240,7 @@ Jede Kapitel-Datei folgt exakt diesem Aufbau:
 
 Bevor du mit dem Schreiben beginnst, verschaffe dir Kontext über die Gesamtarbeit:
 
-1. **Fortschritt.md lesen** (`06-fortschritt/Fortschritt.md`): Welche Kapitel existieren bereits? Welche Begriffe wurden eingeführt? Welche offenen Punkte gibt es?
+1. **Fortschritt.md lesen** (`04-fortschritt/Fortschritt.md`): Welche Kapitel existieren bereits? Welche Begriffe wurden eingeführt? Welche offenen Punkte gibt es?
 2. **Vorheriges Kapitel** (falls vorhanden): Lies mindestens die letzten 2-3 Absätze des direkt vorhergehenden Kapitels. So kannst du einen sauberen Übergang schaffen und vermeidest, Begriffe doppelt einzuführen.
 3. **Nächstes Kapitel in der Gliederung**: Schau dir an, was nach diesem Kapitel kommt. Der letzte Absatz deines Kapitels sollte den Leser darauf vorbereiten.
 
@@ -300,7 +300,7 @@ Falls du bei der Prüfung Probleme findest, korrigiere sie, bevor du den Text de
 
 ## Fortschrittsdokumentation
 
-Nach jeder Schreibsession — also nachdem ein Kapitel oder Abschnitt fertiggestellt und dem User übergeben wurde — aktualisiere die Datei `06-fortschritt/Fortschritt.md`. Diese Datei dient als laufendes Protokoll des Arbeitsstands und hilft dem User (und dir in späteren Sessions) den Überblick zu behalten.
+Nach jeder Schreibsession — also nachdem ein Kapitel oder Abschnitt fertiggestellt und dem User übergeben wurde — aktualisiere die Datei `04-fortschritt/Fortschritt.md`. Diese Datei dient als laufendes Protokoll des Arbeitsstands und hilft dem User (und dir in späteren Sessions) den Überblick zu behalten.
 
 Falls `Fortschritt.md` noch nicht existiert, lege sie an. Falls sie bereits existiert, lies sie zuerst und ergänze den neuen Eintrag am Ende.
 

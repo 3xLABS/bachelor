@@ -33,49 +33,49 @@ Prüft die Voraussetzungen: richtiger Ordner, NotebookLM CLI installiert und aut
 Inhaltliches Fundament: Themenfindung, Forschungsfrage, Gliederung mit Seitenzahlen, Ordnerstruktur, Zeitplanung. **Berührt keine Quellen** — das ist explizit Phase 2.
 
 **Input:** Thema (oder gar nichts)
-**Output:** `04-quellen/Forschungsfrage.md`, `03-docs/Gliederung.md`, `05-text/XX-*/`-Ordner, initialisierte `06-fortschritt/Fortschritt.md` mit Zeitplanung
+**Output:** `02-quellen/Forschungsfrage.md`, `01-docs/Gliederung.md`, `03-text/XX-*/`-Ordner, initialisierte `04-fortschritt/Fortschritt.md` mit Zeitplanung
 **Tools:** Claude im Dialog
 
 ### Phase 2 — Recherche (`bachelorarbeit-recherche`)
 Systematische Quellensuche mit NotebookLM, kapitelweise. Deep Research, schnelle Recherche, manuelles Hinzufügen bekannter Quellen. Upload-Validierung. **Wertet nichts aus** — das ist Phase 3.
 
 **Input:** Forschungsfrage, Gliederung
-**Output:** NotebookLM-Notebook mit indexierten Quellen, `04-quellen/Recherche_Kapitel_[X]_*.md` pro Kapitel
+**Output:** NotebookLM-Notebook mit indexierten Quellen, `02-quellen/Recherche_Kapitel_[X]_*.md` pro Kapitel
 **Tools:** Claude + NotebookLM CLI (`notebooklm-py`)
 
 ### Phase 3 — Quellenauswertung (`bachelorarbeit-quellenauswertung`)
-Systematische Analyse der gesammelten Quellen: Kernaussagen extrahieren, Argumentationsketten bauen, Vergleiche, Forschungslücken, Empfehlung für den Kapitelaufbau. **Produziert keinen Fließtext** — das ist Phase 4.
+Die Quellenauswertung läuft **in Gemini**, nicht in Claude — das spart Token. Claude liefert die Anleitung (Gem-Setup, kapitelspezifische Prompts) und übernimmt die Nachbearbeitung des Gemini-Outputs ins Writer-Format. **Produziert keinen Fließtext** — das ist Phase 4.
 
 **Input:** Recherche-Protokoll + indexiertes NotebookLM-Notebook
-**Output:** `04-quellen/Auswertung_Kapitel_[X]_*.md` im Format, das der Writer erwartet
-**Tools:** Claude + NotebookLM CLI
+**Output:** `02-quellen/Auswertung_Kapitel_[X]_*.md` im Format, das der Writer erwartet
+**Tools:** Gemini (via Gem in Google AI Studio / NotebookLM), Claude nur für Anleitung + Nachbearbeitung
 
 ### Phase 4 — Schreiben (`bachelorarbeit-writer`)
 Schreibt **ein Kapitel pro Lauf** im wissenschaftlichen Stil mit Harvard-Zitierung und Obsidian-Wiki-Links. Beachtet Kapiteltyp (Einleitung/Theorie/Methodik/Ergebnisse/Diskussion/Fazit) und Nachbarkapitel. **Gate:** Startet nur, wenn die Quellenauswertung vorliegt.
 
 **Input:** Forschungsfrage, Gliederung, Quellenauswertung, ggf. Nachbarkapitel
-**Output:** `05-text/XX-Kapitel/Kapitel_[X]_[Kurztitel].md` mit Status "Erster Entwurf"
+**Output:** `03-text/XX-Kapitel/Kapitel_[X]_[Kurztitel].md` mit Status "Erster Entwurf"
 **Tools:** Claude
 
 ### Phase 5 — Review (`bachelorarbeit-reviewer`)
 Bewertet Struktur, Argumentation, Quellenarbeit, Sprache, Formalia aus Professorensicht. Priorisiert Feedback in Muss/Sollte/Optional.
 
 **Input:** Kapitel-Datei + Quellenauswertung + Forschungsfrage + Gliederung
-**Output:** `07-review/Review_Kapitel_[X]_[Kurztitel].md` mit Status-Entscheidung, Status des Kapitels in Fortschritt.md auf "Reviewed"
+**Output:** `05-review/Review_Kapitel_[X]_[Kurztitel].md` mit Status-Entscheidung, Status des Kapitels in Fortschritt.md auf "Reviewed"
 **Tools:** Claude
 
 ### Phase 6 — Überarbeitung (`bachelorarbeit-ueberarbeitung`)
 Arbeitet das Review-Feedback (oder Betreuer-Feedback) systematisch ein. Bewahrt Textidentität, stärkt Argumente, ergänzt Quellen, harmonisiert. Erstellt versionierte Datei.
 
 **Input:** Kapitel-Datei + Review-Datei (oder Betreuer-Feedback)
-**Output:** `05-text/XX-Kapitel/Kapitel_[X]_[Kurztitel]_v2.md` mit Änderungsprotokoll, Status "Überarbeitet"
+**Output:** `03-text/XX-Kapitel/Kapitel_[X]_[Kurztitel]_v2.md` mit Änderungsprotokoll, Status "Überarbeitet"
 **Tools:** Claude
 
 ### Phase 7 — Finalisierung (`bachelorarbeit-finalisierung`)
 Gesamtcheck der Arbeit (roter Faden, Begriffskonsistenz, Übergänge), Erstellung des Literaturverzeichnisses aus allen Kapitel-Quellenlisten, Word-Formatierung nach Hochschulvorgaben.
 
 **Input:** Alle reviewten/überarbeiteten Kapitel-Dateien + Formatvorgaben + Titelblatt-Infos
-**Output:** `08-final/bachelorarbeit_final.docx` + `04-quellen/Literaturverzeichnis_final.md` + Prüfbericht
+**Output:** `06-final/bachelorarbeit_final.docx` + `02-quellen/Literaturverzeichnis_final.md` + Prüfbericht
 **Tools:** Claude + docx-js
 
 ## Pipeline-Flow
@@ -125,7 +125,7 @@ Ausstehend → Erster Entwurf → Reviewed → Überarbeitet → Reviewed → Fi
 
 ## Fortschritt.md als geteilter State
 
-Alle Skills lesen und schreiben `06-fortschritt/Fortschritt.md`. Diese Datei ist die **einzige Quelle der Wahrheit** für:
+Alle Skills lesen und schreiben `04-fortschritt/Fortschritt.md`. Diese Datei ist die **einzige Quelle der Wahrheit** für:
 
 - Welche Phase der Pipeline gerade läuft
 - Welchen Status jedes Kapitel hat
@@ -160,25 +160,35 @@ Einleitung und Fazit **zuletzt**, weil sie erst dann sauber geschrieben werden k
 | "Schau dir mein Kapitel an" / "Review" / "Feedback" | bachelorarbeit-reviewer |
 | "Arbeite das Feedback ein" / "Überarbeite" / "Mein Betreuer hat gesagt..." | bachelorarbeit-ueberarbeitung |
 | "Mach die Arbeit fertig" / "Word-Datei" / "Abgabeversion" | bachelorarbeit-finalisierung |
-| "Wie ist der Stand?" | → Lies `06-fortschritt/Fortschritt.md` |
+| "Wie ist der Stand?" | → Lies `04-fortschritt/Fortschritt.md` |
 
-## Obsidian-Ordnerstruktur
+## Ordnerstruktur
 
 ```
-bachelor/                          ← Obsidian Vault Root
-├── 01-claude/
-│   └── CLAUDE.md                  ← Diese Datei (Pipeline-Orchestrierung)
-├── 02-skills/
-│   └── *.skill / *-SKILL.md       ← Alle Skill-Dateien
-├── 03-docs/
+bachelor/                          ← Obsidian Vault Root + Git-Repo
+├── .claude/
+│   ├── CLAUDE.md                  ← Diese Datei (Pipeline-Orchestrierung)
+│   └── skills/
+│       ├── bachelorarbeit-onboarding/SKILL.md
+│       ├── bachelorarbeit-planung/SKILL.md
+│       ├── bachelorarbeit-recherche/SKILL.md
+│       ├── bachelorarbeit-quellenauswertung/SKILL.md
+│       ├── bachelorarbeit-writer/
+│       │   ├── SKILL.md
+│       │   └── references/         ← Harvard-Stil, Argumentationsstrukturen
+│       ├── bachelorarbeit-reviewer/SKILL.md
+│       ├── bachelorarbeit-ueberarbeitung/SKILL.md
+│       ├── bachelorarbeit-finalisierung/SKILL.md
+│       └── notebooklm/SKILL.md     ← NotebookLM-CLI-Referenz
+├── 01-docs/
 │   ├── Gliederung.md              ← Aus Phase 1
-│   └── BA-*-Muster.md             ← Vorlagen (optional)
-├── 04-quellen/
+│   └── BA-*-Muster.md             ← Vorlagen
+├── 02-quellen/
 │   ├── Forschungsfrage.md         ← Aus Phase 1
 │   ├── Recherche_Kapitel_*.md     ← Aus Phase 2
 │   ├── Auswertung_Kapitel_*.md    ← Aus Phase 3
 │   └── Literaturverzeichnis_final.md  ← Aus Phase 7
-├── 05-text/
+├── 03-text/
 │   ├── 01-Einleitung/
 │   │   ├── Kapitel_1_Einleitung.md       ← v1 aus Phase 4
 │   │   └── Kapitel_1_Einleitung_v2.md    ← Aus Phase 6
@@ -187,12 +197,13 @@ bachelor/                          ← Obsidian Vault Root
 │   ├── 04-Ergebnisse/
 │   ├── 05-Diskussion/
 │   └── 06-Fazit/
-├── 06-fortschritt/
+├── 04-fortschritt/
 │   └── Fortschritt.md             ← Zentrales Protokoll
-├── 07-review/
+├── 05-review/
 │   └── Review_Kapitel_*.md        ← Aus Phase 5
-└── 08-final/
-    └── bachelorarbeit_final.docx  ← Aus Phase 7
+├── 06-final/
+│   └── bachelorarbeit_final.docx  ← Aus Phase 7
+└── Prompts.md                     ← Copy-Paste-Prompts für externe Tools
 ```
 
 ## Wichtige Konventionen
@@ -201,7 +212,7 @@ bachelor/                          ← Obsidian Vault Root
 - **Obsidian-Wiki-Links:** Quellenangaben im Text verlinken in die Quellenauswertung: `[[BA_Quellenauswertung_Kapitel X#Autor, Jahr|Autor, Jahr]]`
 - **Fehlende Quellen:** Immer `[QUELLE ERGÄNZEN]` markieren, nie erfinden
 - **Unsichere Seitenangaben:** `[SEITE PRÜFEN]` (stammt aus Phase 3, wird vom Writer übernommen)
-- **Dateinamen:** `Kapitel_[X]_[Kurztitel].md` in `05-text/[XX-Kapitel]/`, Reviews als `Review_Kapitel_[X]_[Kurztitel].md` in `07-review/`, Versionen mit `_v2`, `_v3`
+- **Dateinamen:** `Kapitel_[X]_[Kurztitel].md` in `03-text/[XX-Kapitel]/`, Reviews als `Review_Kapitel_[X]_[Kurztitel].md` in `05-review/`, Versionen mit `_v2`, `_v3`
 - **Sprache:** Wissenschaftlich, dritte Person, kein Ich, kein Journalismus
 - **Argumentation:** Jeder Absatz mit mindestens einem gestützten Argument (Claim → Reason → Evidence)
 - **Abbildungen:** Platzhalter `[ABBILDUNG X.Y: Beschreibung]` im Text (Nummerierung nach Kapitel)

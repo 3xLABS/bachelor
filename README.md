@@ -1,6 +1,6 @@
 # Bachelorarbeit-Pipeline
 
-Ein KI-gestütztes Skill-System für Bachelorarbeiten im Fachbereich BWL. Fünf spezialisierte Claude-Skills arbeiten als Pipeline zusammen — von der Themenfindung bis zur abgabefertigen Word-Datei.
+Ein KI-gestütztes Skill-System für Bachelorarbeiten im Fachbereich BWL. Acht spezialisierte Claude-Skills arbeiten als Pipeline zusammen — von der Themenfindung bis zur abgabefertigen Word-Datei.
 
 ## Überblick
 
@@ -16,37 +16,44 @@ Die Pipeline verteilt die Arbeit auf mehrere Tools, die jeweils das tun, was sie
 
 **Grundregel:** Perplexity sucht, NotebookLM + Gemini werten aus, Claude schreibt, Obsidian hält alles zusammen.
 
-## Die fünf Skills
+## Die acht Skills
 
-### 0. bachelorarbeit-planung
+### 0. bachelorarbeit-onboarding
+Prüft die Voraussetzungen: richtiger Ordner, NotebookLM CLI installiert und authentifiziert, Sub-Skills vorhanden, Internetzugang, bestehender Fortschritt.
+
+### 1. bachelorarbeit-planung
 Der Einstiegspunkt. Bringt dich vom groben Thema zur schreibfertigen Ausgangslage: Forschungsfrage, Gliederung mit Seitenzahlen, Quellenrecherche und -auswertung. Orchestriert den Multi-Tool-Workflow und generiert Copy-Paste-Prompts für Perplexity und Gemini.
 
-### 1. bachelorarbeit-writer
+### 2. bachelorarbeit-recherche
+Systematische Quellensuche mit NotebookLM, kapitelweise. Deep Research, schnelle Recherche, manuelles Hinzufügen bekannter Quellen.
+
+### 3. bachelorarbeit-quellenauswertung
+Leitet die Quellenauswertung mit Gemini (via Gem + NotebookLM) an. Claude liefert die Gem-Systemprompt, kapitelspezifische Prompts und übernimmt die Nachbearbeitung ins Writer-Format — die eigentliche Analyse läuft in Gemini, um Token zu sparen.
+
+### 4. bachelorarbeit-writer
 Schreibt einzelne Kapitel auf Basis von Forschungsfrage, Gliederung und Quellenauswertung. Produziert wissenschaftlichen Fließtext im Harvard-Zitierstil mit Claim-Reason-Evidence-Argumentation. Berücksichtigt Nachbarkapitel und kapiteltyp-spezifische Anforderungen.
 
-### 2. bachelorarbeit-reviewer
+### 5. bachelorarbeit-reviewer
 Reviewt ein fertiges Kapitel aus Professorensicht. Bewertet Struktur, Argumentation, Quellenarbeit, Sprache und Formalia. Priorisiert Feedback in Muss/Sollte/Optional.
 
-### 3. bachelorarbeit-ueberarbeitung
+### 6. bachelorarbeit-ueberarbeitung
 Arbeitet Review- oder Betreuer-Feedback systematisch in das Kapitel ein. Bewahrt die Textidentität, stärkt Argumente, ergänzt Quellen, harmonisiert mit der Gesamtarbeit.
 
-### 4. bachelorarbeit-finalisierung
+### 7. bachelorarbeit-finalisierung
 Prüft die gesamte Arbeit als Einheit (roter Faden, Begriffe, Zitierung, Übergänge), erstellt das Literaturverzeichnis und formatiert alles als abgabefertige Word-Datei (.docx).
 
 ## Gesamtablauf
 
 ```
-Phase 0: PLANUNG (bachelorarbeit-planung)
-   Thema → Forschungsfrage → Gliederung → Quellen suchen (Perplexity)
-   → Quellen laden (NotebookLM) → Quellen auswerten (Gemini)
-
-Phase 1-3: SCHREIBEN (pro Kapitel wiederholen)
-   Quellenauswertung → Writer → Reviewer → Überarbeitung
-                                    ↓
-                        Bei Bedarf: Review → Überarbeitung (Zyklus)
-
-Phase 4: FINALISIERUNG
-   Alle Kapitel → Gesamtcheck → Literaturverzeichnis → Word-Datei
+Phase 0: ONBOARDING  → System-Check, Voraussetzungen prüfen
+Phase 1: PLANUNG     → Thema → Forschungsfrage → Gliederung → Zeitplan
+Phase 2: RECHERCHE   → Quellen suchen (NotebookLM + Perplexity)
+Phase 3: AUSWERTUNG  → Quellen analysieren in Gemini (Claude liefert Prompts + formatiert)
+Phase 4-6: SCHREIBEN (pro Kapitel wiederholen)
+   Writer → Reviewer → Überarbeitung
+                          ↓
+              Bei Bedarf: Review → Überarbeitung (Zyklus)
+Phase 7: FINALISIERUNG → Gesamtcheck → Literaturverzeichnis → Word-Datei
 ```
 
 ## Voraussetzungen
@@ -64,22 +71,17 @@ Phase 4: FINALISIERUNG
 git clone https://github.com/3xLABS/bachelor.git
 ```
 
-### Schritt 2: In Obsidian öffnen (optional)
+### Schritt 2: In Claude laden
+
+1. Öffne **Claude Desktop** (Cowork-Mode) oder **Claude Code**
+2. Wähle den `bachelor/`-Ordner als Arbeitsverzeichnis
+3. Fertig — Claude erkennt `.claude/CLAUDE.md` und alle Skills automatisch
+
+Alle Skills liegen in `.claude/skills/` und werden von Claude beim Ordner-Öffnen sofort geladen. Kein manuelles Kopieren nötig.
+
+### Schritt 3: In Obsidian öffnen (optional)
 
 Öffne den `bachelor/`-Ordner als Obsidian-Vault: Obsidian → Vault öffnen → Ordner auswählen.
-
-### Schritt 3: Skills in Claude laden
-
-Die Skills befinden sich als `.skill`-Dateien in `02-skills/`. Um sie in Claude zu nutzen:
-
-1. Öffne Claude Desktop (Cowork-Mode) oder Claude Code
-2. Wähle den `bachelor/`-Ordner als Arbeitsverzeichnis
-3. Claude erkennt die CLAUDE.md in `01-claude/` automatisch und weiß, welchen Skill er wann nutzen soll
-
-**Alternativ** kannst du die `.skill`-Dateien manuell in deinen Claude-Skills-Ordner kopieren:
-```bash
-cp 02-skills/*.skill ~/.claude/skills/
-```
 
 ### Schritt 4: Loslegen
 
@@ -94,31 +96,39 @@ Claude startet automatisch den Planungs-Skill.
 ## Ordnerstruktur
 
 ```
-bachelor/                        ← Obsidian Vault Root
-├── 01-claude/
-│   └── CLAUDE.md                ← Pipeline-Orchestrierung (liest Claude automatisch)
-├── 02-skills/
-│   └── *.skill + *-SKILL.md    ← Alle 5 Skill-Dateien
-├── 03-docs/
-│   ├── Gliederung.md            ← Deine Gliederung (wird in Phase 0 erstellt)
+bachelor/                        ← Obsidian Vault Root + Git-Repo
+├── .claude/
+│   ├── CLAUDE.md                ← Pipeline-Orchestrierung (liest Claude automatisch)
+│   └── skills/                  ← Alle 8 Skills (werden automatisch erkannt)
+│       ├── bachelorarbeit-onboarding/
+│       ├── bachelorarbeit-planung/
+│       ├── bachelorarbeit-recherche/
+│       ├── bachelorarbeit-quellenauswertung/
+│       ├── bachelorarbeit-writer/
+│       ├── bachelorarbeit-reviewer/
+│       ├── bachelorarbeit-ueberarbeitung/
+│       ├── bachelorarbeit-finalisierung/
+│       └── notebooklm/
+├── 01-docs/
+│   ├── Gliederung.md            ← Deine Gliederung (wird in Phase 1 erstellt)
 │   ├── BA-Gliederung-Muster.md  ← Vorlage mit Beispielgliederung
 │   └── BA-Struktur-Muster.md    ← Standard-BWL-Struktur mit Seitenverteilung
-├── 04-quellen/
-│   ├── Forschungsfrage.md       ← Deine Forschungsfrage (wird in Phase 0 erstellt)
+├── 02-quellen/
+│   ├── Forschungsfrage.md       ← Deine Forschungsfrage (wird in Phase 1 erstellt)
 │   ├── Quellenverzeichnis.md    ← Alle gesammelten Quellen
 │   └── Auswertung_KapX_*.md    ← Quellenauswertungen pro Kapitel
-├── 05-text/
+├── 03-text/
 │   ├── 01-Einleitung/
 │   ├── 02-Theoretischer Rahmen/
 │   ├── 03-Methodik/
 │   ├── 04-Ergebnisse/
 │   ├── 05-Diskussion/
 │   └── 06-Fazit/
-├── 06-fortschritt/
+├── 04-fortschritt/
 │   └── Fortschritt.md           ← Zentrales Protokoll (geteilter State aller Skills)
-├── 07-review/
-│   └── review_kapitel_*.md      ← Reviews
-├── 08-final/
+├── 05-review/
+│   └── Review_Kapitel_*.md      ← Reviews
+├── 06-final/
 │   └── bachelorarbeit_final.docx  ← Abgabe-Datei
 └── Prompts.md                   ← 17 Copy-Paste-Prompts für alle Tools
 ```
@@ -132,7 +142,7 @@ bachelor/                        ← Obsidian Vault Root
 3. **Gliederung erstellen** — Claude erstellt eine Gliederung mit Seitenvorgaben pro Kapitel
 4. **Quellen recherchieren** — Claude generiert Perplexity-Prompts (siehe `Prompts.md`, Codes P-1 bis P-5). Kopiere die Prompts in Perplexity und sammle 40–80 Quellen
 5. **Quellen in NotebookLM laden** — Erstelle ein Notebook pro Kapitelgruppe und lade die gefundenen PDFs/URLs hoch
-6. **Quellen auswerten** — Nutze die Gemini-Prompts (G-1 bis G-6 in `Prompts.md`) direkt in NotebookLM, um kapitelweise Auswertungen zu erstellen. Speichere die Ergebnisse als `Auswertung_KapX_*.md` in `04-quellen/`
+6. **Quellen auswerten** — Sage Claude „Quellen auswerten für Kapitel X". Claude leitet dich durch das Gem-Setup und generiert fertige Prompts für Gemini. Du wertest in Gemini aus, Claude formatiert das Ergebnis danach ins Writer-Format.
 
 ### Phase 1: Kapitel schreiben
 
@@ -179,7 +189,7 @@ Der Planungs-Skill füllt die `{{PLATZHALTER}}` automatisch mit deinen konkreten
 
 ## Fortschritt verfolgen
 
-Die `Fortschritt.md` in `06-fortschritt/` wird von allen Skills automatisch aktualisiert. Sie zeigt:
+Die `Fortschritt.md` in `04-fortschritt/` wird von allen Skills automatisch aktualisiert. Sie zeigt:
 
 - Forschungsfrage
 - Status der Planungsphasen

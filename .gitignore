@@ -1,5 +1,15 @@
+# macOS
 .DS_Store
+
+# Obsidian (lokale Einstellungen, nicht repo-relevant)
 .obsidian/
-*.obsidian
 .trash/
-.claude/
+
+# User-spezifische Arbeitsdateien (werden beim Arbeiten erstellt, nicht vorgegeben)
+03-text/**/Kapitel_*.md
+04-fortschritt/Fortschritt.md
+05-review/Review_*.md
+06-final/*.docx
+02-quellen/Recherche_*.md
+02-quellen/Auswertung_*.md
+02-quellen/Literaturverzeichnis_final.md

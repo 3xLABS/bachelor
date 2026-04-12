@@ -10,7 +10,7 @@ Du bist Phase 7 — der letzte Schritt in der Pipeline. Deine Voraussetzung: All
 
 **Abgrenzung:**
 - Du **schreibst keine Inhalte** — du prüfst die Gesamtarbeit, erstellst das Literaturverzeichnis aus den bereits zitierten Quellen und formatierst als .docx
-- Dein Output ist eine abgabefertige Word-Datei in `08-final/` + ein Prüfbericht
+- Dein Output ist eine abgabefertige Word-Datei in `06-final/` + ein Prüfbericht
 
 Du bist der letzte Schritt in der Pipeline: Du nimmst alle fertig überarbeiteten Kapitel einer Bachelorarbeit, prüfst die Gesamtarbeit als Einheit und formatierst sie als abgabefertige Word-Datei (.docx). Deine Aufgabe hat zwei Phasen — zuerst Qualitätssicherung, dann Formatierung.
 
@@ -18,7 +18,7 @@ Du bist der letzte Schritt in der Pipeline: Du nimmst alle fertig überarbeitete
 
 Vom User benötigst du:
 
-1. **Alle Kapitel der Arbeit** — als Markdown-Dateien in `05-text/[Kapitelordner]/`, idealerweise die finalen Versionen (_v2, _v3 etc.) aus dem Überarbeitungs-Skill. Lies zuerst `06-fortschritt/Fortschritt.md`, um den Überblick über Status und offene Punkte zu bekommen.
+1. **Alle Kapitel der Arbeit** — als Markdown-Dateien in `03-text/[Kapitelordner]/`, idealerweise die finalen Versionen (_v2, _v3 etc.) aus dem Überarbeitungs-Skill. Lies zuerst `04-fortschritt/Fortschritt.md`, um den Überblick über Status und offene Punkte zu bekommen.
 
 2. **Formatvorgaben** — Die Formatierungsrichtlinien der Hochschule oder des Lehrstuhls. Diese können vorliegen als:
    - Eine hochgeladene Datei (PDF, Word, Bild der Richtlinien)
@@ -114,7 +114,7 @@ Bevor die Word-Datei erstellt wird, muss ein vollständiges Literaturverzeichnis
 ### Vorgehen
 
 1. **Alle Kapitel scannen:** Lies alle `## Verwendete Quellen in diesem Kapitel`-Abschnitte aus den fertigen Kapiteldateien
-2. **Quellenverzeichnis laden:** Lies `04-quellen/Quellenverzeichnis.md` — dort stehen die vollständigen bibliographischen Angaben
+2. **Quellenverzeichnis laden:** Lies `02-quellen/Quellenverzeichnis.md` — dort stehen die vollständigen bibliographischen Angaben
 3. **Abgleichen und konsolidieren:**
    - Jede im Text zitierte Quelle muss im Literaturverzeichnis stehen
    - Quellen aus dem Quellenverzeichnis, die in keinem Kapitel zitiert werden, gehören NICHT ins Literaturverzeichnis
@@ -125,7 +125,7 @@ Bevor die Word-Datei erstellt wird, muss ein vollständiges Literaturverzeichnis
    - Online-Quellen: `Nachname, V. (Jahr): Titel. URL [Zugriff: TT.MM.JJJJ].`
    - Institutionelle Quellen: `Institution (Jahr): Titel. Ort.`
 5. **Alphabetisch sortieren** nach Nachnamen des Erstautors
-6. **Speichern** als `04-quellen/Literaturverzeichnis_final.md`
+6. **Speichern** als `02-quellen/Literaturverzeichnis_final.md`
 
 ### Qualitätsprüfung
 
@@ -359,7 +359,7 @@ Nachdem die Datei erstellt wurde:
 
 ## Fortschritt.md aktualisieren
 
-Nach der Finalisierung, aktualisiere `06-fortschritt/Fortschritt.md`:
+Nach der Finalisierung, aktualisiere `04-fortschritt/Fortschritt.md`:
 - Status aller Kapitel auf "Final" setzen
 - Gesamtseitenzahl und -wortzahl eintragen
 - Verbleibende offene Punkte dokumentieren (insbesondere [QUELLE ERGÄNZEN]-Stellen)
@@ -368,7 +368,7 @@ Nach der Finalisierung, aktualisiere `06-fortschritt/Fortschritt.md`:
 
 ## Output
 
-Die finale Datei wird gespeichert in `08-final/bachelorarbeit_final.docx` (oder ein vom User gewünschter Dateiname). Zusätzlich lieferst du:
+Die finale Datei wird gespeichert in `06-final/bachelorarbeit_final.docx` (oder ein vom User gewünschter Dateiname). Zusätzlich lieferst du:
 
 1. **Die Word-Datei** — abgabebereit formatiert
 2. **Den Prüfbericht** — als Zusammenfassung der Phase-1-Ergebnisse

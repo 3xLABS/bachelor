@@ -164,7 +164,11 @@ Das ist wichtig für mein Diskussionskapitel. Gib für jeden Widerspruch/jede De
 
 ---
 
-## Gemini (via NotebookLM)
+## Gemini (via Gem + NotebookLM)
+
+> **Empfohlen:** Erstelle einmalig den Gem „BA Quellenauswertung" in Google AI Studio (Anleitung und Systemprompt liefert Claude automatisch über den Quellenauswertungs-Skill). Der Gem kennt das Ausgabeformat und liefert konsistentere Ergebnisse als die Einzel-Prompts unten.
+>
+> Die Prompts unten funktionieren auch ohne Gem — direkt im NotebookLM-Chat.
 
 ### G-1: Forschungsfrage ableiten
 
@@ -187,117 +191,108 @@ Output:
 - Methodischer Vorschlag (welche Methode passt zur Frage?)
 ```
 
-### G-2: Kapitelspezifische Quellenauswertung
+### G-2: Kapitelspezifische Quellenauswertung (Hauptprompt)
 
 ```
-Durchsuche die geladenen Quellen und erstelle eine detaillierte Quellenauswertung für Kapitel [X]: "[Kapiteltitel]" meiner Bachelorarbeit.
+Erstelle eine vollständige Quellenauswertung für Kapitel [X]: "[Kapiteltitel]" meiner Bachelorarbeit.
 
 Die Forschungsfrage lautet: "[Forschungsfrage]"
 
-Für jede relevante Quelle liefere:
+Dieses Kapitel soll folgende Unterkapitel abdecken:
+- [Unterkapitel 1]
+- [Unterkapitel 2]
+- [...]
 
+Nutze dieses Ausgabeformat:
+
+# Quellenauswertung Kapitel [X]: [Kapiteltitel]
+
+Für jede relevante Quelle:
 ### [Autor, Jahr] — [Kurztitel]
-**Kernaussagen für dieses Kapitel:**
-- [Aussage 1] (S. [XX])
-- [Aussage 2] (S. [XX])
+**Typ:** [Studie/Fachbuch/Review/Report/Standard]
+**Kernaussagen:** (mit Seitenangaben)
+**Methodik** (falls empirisch): [Methode, Stichprobe, Design]
+**Verwendbare Zitate:** (direkt zitieren, mit Seite)
+**Relevanz für die Arbeit:**
+**Limitationen:**
 
-**Verwendbare direkte Zitate:**
-- "[Zitat 1]" (S. [XX])
-- "[Zitat 2]" (S. [XX])
-
-**Daten/Statistiken/Fakten:**
-- [Fakt mit Seitenangabe]
-
-**Relevanz:** [1-2 Sätze: Warum ist diese Quelle für dieses Kapitel wichtig?]
-
----
-
-Erstelle am Ende eine Zusammenfassung:
-- Welche Quellen sind die wichtigsten für dieses Kapitel?
-- Wo gibt es Übereinstimmungen zwischen Autoren?
-- Wo gibt es Widersprüche?
-- Welche Aspekte sind durch Quellen gut abgedeckt, welche dünn?
+Dann:
+## Vergleichende Analyse (Gemeinsamkeiten, Widersprüche, Definitionen im Vergleich)
+## Argumentationsketten (Claim → Reason → Evidence, mit Gegenargumenten)
+## Forschungslücken und offene Fragen
+## Empfehlung für den Kapitelaufbau
+## Quellenverzeichnis (Harvard, alphabetisch)
 ```
 
 ### G-3: Argumentationsketten bauen
 
 ```
-Basierend auf den Quellen in diesem Notebook: Baue eine wissenschaftliche Argumentationskette für Kapitel [X]: "[Kapiteltitel]".
+Baue eine wissenschaftliche Argumentationskette für Kapitel [X]: "[Kapiteltitel]".
 
-Die zentrale These dieses Kapitels soll sein: "[These, z.B. Cyberrisiken erfordern ein integriertes Risikomanagement, das über klassische IT-Sicherheit hinausgeht]"
+Die zentrale These dieses Kapitels: "[These]"
 
-Strukturiere die Argumentation so:
-
-### Argument 1: [Titel]
+Für jedes Argument:
 **Behauptung (Claim):** [Was wird behauptet?]
 **Begründung (Reason):** [Warum ist das plausibel?]
 **Beleg (Evidence):** [Welche Quellen stützen das? Mit Autor, Jahr, Seitenangabe]
 
-### Argument 2: [Titel]
-...
-
-### Gegenargumente
-**Position:** [Was spricht dagegen?]
-**Quelle:** [Wer vertritt diese Position?]
-**Entkräftung/Einordnung:** [Wie geht man damit um?]
-
-### Synthese
-[Wie fügen sich die Argumente zu einer schlüssigen Gesamtargumentation zusammen?]
-
-Wichtig:
-- Jedes Argument muss durch mindestens eine konkrete Quelle mit Seitenangabe belegt sein
-- Zeige auch Gegenargumente — das stärkt die wissenschaftliche Qualität
-- Die Argumentationskette soll den roten Faden des Kapitels bilden
+Zeige auch Gegenargumente und eine Synthese.
+Jedes Argument muss durch mindestens eine konkrete Quelle mit Seitenangabe belegt sein.
 ```
 
 ### G-4: Definitionen und Begriffsklärung
 
 ```
-Durchsuche alle Quellen nach Definitionen für folgende Begriffe, die in meiner Arbeit zentral sind:
+Durchsuche alle Quellen nach Definitionen für folgende Begriffe:
 
-1. [Begriff 1, z.B. Risikomanagement]
-2. [Begriff 2, z.B. Digitale Transformation]
-3. [Begriff 3, z.B. Cyberrisiko]
-4. [Begriff 4, z.B. KI-Governance]
+1. [Begriff 1]
+2. [Begriff 2]
+3. [Begriff 3]
 
 Für jeden Begriff:
 - Alle Definitionen aus den Quellen (mit Autor, Jahr, Seite)
-- Gemeinsamkeiten und Unterschiede zwischen den Definitionen
-- Empfehlung: Welche Definition eignet sich als Arbeitsdefinition für meine Arbeit und warum?
+- Gemeinsamkeiten und Unterschiede
+- Empfehlung: Welche eignet sich als Arbeitsdefinition und warum?
 ```
 
 ### G-5: Quellen für Methodenkapitel auswerten
 
 ```
-Durchsuche die methodenbezogenen Quellen und erstelle eine Auswertung für mein Methodenkapitel.
+Werte die methodenbezogenen Quellen für mein Methodenkapitel aus.
 
-Meine geplante Methode: [z.B. Qualitative Inhaltsanalyse nach Mayring]
+Geplante Methode: [z.B. Qualitative Inhaltsanalyse nach Mayring]
 
-Ich brauche:
-1. Methodenbeschreibung: Wie definieren die Quellen diese Methode? (mit Seitenangaben)
-2. Begründung: Welche Argumente liefern die Quellen dafür, diese Methode bei meiner Forschungsfrage einzusetzen?
-3. Ablauf: Welche Schritte beschreiben die Quellen? (z.B. Kategorienbildung, Kodierung, Auswertung)
-4. Gütekriterien: Welche Qualitätskriterien nennen die Quellen? (z.B. Interkoderreliabilität, Nachvollziehbarkeit)
-5. Limitationen: Welche Grenzen/Einschränkungen der Methode werden diskutiert?
-6. Alternative Methoden: Was wäre alternativ möglich und warum ist meine Wahl besser?
+Liefere:
+1. Methodenbeschreibung (mit Seitenangaben)
+2. Begründung für den Einsatz bei meiner Forschungsfrage
+3. Ablauf/Schritte laut Quellen
+4. Gütekriterien
+5. Limitationen
+6. Alternative Methoden und warum meine Wahl besser ist
 ```
 
 ### G-6: Diskussionskapitel vorbereiten
 
 ```
-Ich bereite mein Diskussionskapitel vor. Durchsuche alle Quellen und hilf mir bei folgenden Punkten:
+Bereite mein Diskussionskapitel vor:
 
-1. **Theorie-Empirie-Abgleich:** Welche theoretischen Vorhersagen aus meinem Theoriekapitel werden durch welche Quellen bestätigt oder widerlegt?
+1. Theorie-Empirie-Abgleich: Welche theoretischen Vorhersagen werden bestätigt/widerlegt?
+2. Einordnung in den Forschungsstand
+3. Praktische Implikationen und Handlungsempfehlungen
+4. Limitationen ähnlicher Studien
+5. Offene Fragen und Forschungsbedarf
 
-2. **Einordnung in den Forschungsstand:** Wie ordnen sich meine Ergebnisse in die bestehende Literatur ein? Wo bestätigen sie, wo widersprechen sie?
+Immer mit konkreten Quellenbelegen (Autor, Jahr, Seite).
+```
 
-3. **Praktische Implikationen:** Welche konkreten Handlungsempfehlungen lassen sich aus den Quellen und meinen Ergebnissen ableiten?
+### G-7: Widersprüche und Forschungslücken
 
-4. **Limitationen:** Welche methodischen und inhaltlichen Grenzen diskutieren ähnliche Studien in den Quellen?
+```
+Analysiere die Quellen zu Kapitel [X] auf:
 
-5. **Forschungsbedarf:** Welche offenen Fragen identifizieren die Quellen? Was sollte zukünftige Forschung untersuchen?
-
-Gib für jeden Punkt konkrete Quellenbelege (Autor, Jahr, Seite).
+1. Wo widersprechen sich Autoren? Wer vertritt welche Position? Welche ist besser belegt?
+2. Welche Aspekte von [Kapitelthema] werden NICHT oder nur unzureichend abgedeckt?
+3. Gibt es einen erkennbaren Forschungstrend oder Paradigmenwechsel?
 ```
 
 ---

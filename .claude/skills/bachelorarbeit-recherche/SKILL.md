@@ -18,9 +18,9 @@ Du führst systematische Literaturrecherchen durch und sammelst wissenschaftlich
 Bevor du startest, prüfe:
 
 1. **NotebookLM ist authentifiziert:** `notebooklm status` — muss eine Email anzeigen
-2. **Forschungsfrage existiert:** Lies `04-quellen/Forschungsfrage.md`
-3. **Gliederung existiert:** Lies `03-docs/Gliederung.md`
-4. **Fortschritt.md existiert:** Lies `06-fortschritt/Fortschritt.md`, um den Überblick zu behalten
+2. **Forschungsfrage existiert:** Lies `02-quellen/Forschungsfrage.md`
+3. **Gliederung existiert:** Lies `01-docs/Gliederung.md`
+4. **Fortschritt.md existiert:** Lies `04-fortschritt/Fortschritt.md`, um den Überblick zu behalten
 
 Falls eines fehlt, weise auf Phase 1 (`bachelorarbeit-planung`) hin und biete nicht an, die Lücke hier zu schließen — die Phasen sind bewusst getrennt.
 
@@ -139,7 +139,7 @@ Das hält das Notebook sauber und verbessert die Qualität in Phase 3.
 
 ### 6. Recherche-Protokoll erstellen
 
-Speichere ein Recherche-Protokoll pro Kapitel in `04-quellen/`:
+Speichere ein Recherche-Protokoll pro Kapitel in `02-quellen/`:
 
 ```markdown
 # Recherche-Protokoll Kapitel [X]: [Titel]
@@ -171,7 +171,7 @@ Speichere ein Recherche-Protokoll pro Kapitel in `04-quellen/`:
 Phase 3: `bachelorarbeit-quellenauswertung` für dieses Kapitel ausführen.
 ```
 
-**Dateiname:** `04-quellen/Recherche_Kapitel_[X]_[Kurztitel].md`
+**Dateiname:** `02-quellen/Recherche_Kapitel_[X]_[Kurztitel].md`
 
 ### 7. Ergänzungsrecherche
 
@@ -184,7 +184,7 @@ Falls Lücken bestehen, wiederhole Schritt 3 mit spezifischeren Suchbegriffen. E
 
 ### 8. Fortschritt.md aktualisieren
 
-Trage den Recherche-Fortschritt in `06-fortschritt/Fortschritt.md` ein:
+Trage den Recherche-Fortschritt in `04-fortschritt/Fortschritt.md` ein:
 - Pipeline-Status für Phase 2: "In Bearbeitung" oder "Abgeschlossen für Kapitel [X]"
 - Offene Punkte aktualisieren
 - Nächste Schritte: Phase 3 für das gleiche Kapitel
@@ -205,7 +205,7 @@ Wenn die Recherche für ein Kapitel abgeschlossen ist:
 **Checkliste:**
 - [ ] NotebookLM-Notebook enthält mindestens 10–15 relevante Quellen für das Kapitel
 - [ ] Alle Quellen haben `status: "ready"`
-- [ ] Recherche-Protokoll `04-quellen/Recherche_Kapitel_[X]_*.md` ist geschrieben
+- [ ] Recherche-Protokoll `02-quellen/Recherche_Kapitel_[X]_*.md` ist geschrieben
 - [ ] Fehlgeschlagene Uploads sind dokumentiert
 - [ ] Fortschritt.md ist aktualisiert
 

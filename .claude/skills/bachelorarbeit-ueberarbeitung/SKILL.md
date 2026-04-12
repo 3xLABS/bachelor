@@ -21,30 +21,30 @@ Du bist kein Neuschreiber, du bist ein Überarbeiter. Das bedeutet: Du behältst
 
 Der Überarbeitungs-Skill arbeitet direkt mit den Markdown-Dateien aus der Pipeline. Bevor du loslegst, lade den vollständigen Kontext:
 
-1. **Fortschritt.md lesen** (`06-fortschritt/Fortschritt.md`) — Verschaffe dir den Überblick: Welche Kapitel existieren, welchen Status haben sie, welche Muss-Punkte und offenen Quellen gibt es?
+1. **Fortschritt.md lesen** (`04-fortschritt/Fortschritt.md`) — Verschaffe dir den Überblick: Welche Kapitel existieren, welchen Status haben sie, welche Muss-Punkte und offenen Quellen gibt es?
 
-2. **Kapitel-Datei finden** — Schau in `05-text/` und seinen Unterordnern nach der Markdown-Datei des zu überarbeitenden Kapitels. Das Namensschema ist:
+2. **Kapitel-Datei finden** — Schau in `03-text/` und seinen Unterordnern nach der Markdown-Datei des zu überarbeitenden Kapitels. Das Namensschema ist:
    ```
-   05-text/[Ordner]/Kapitel_[X]_[Kurztitel].md
+   03-text/[Ordner]/Kapitel_[X]_[Kurztitel].md
    ```
-   z.B. `05-text/02-Theoretischer Rahmen/Kapitel_2_Theoretische_Grundlagen.md`
+   z.B. `03-text/02-Theoretischer Rahmen/Kapitel_2_Theoretische_Grundlagen.md`
 
-3. **Review-Datei finden** — Schau in `07-review/` nach dem zugehörigen Review:
+3. **Review-Datei finden** — Schau in `05-review/` nach dem zugehörigen Review:
    ```
-   07-review/Review_Kapitel_[X]_[Kurztitel].md
+   05-review/Review_Kapitel_[X]_[Kurztitel].md
    ```
-   z.B. `07-review/Review_Kapitel_2_Theoretische_Grundlagen.md`
+   z.B. `05-review/Review_Kapitel_2_Theoretische_Grundlagen.md`
 
-4. **Forschungsfrage laden** — Lies `04-quellen/BA_Forschungsfrage.md` (der Metadaten-Header der Kapitel-Datei verlinkt direkt dorthin)
+4. **Forschungsfrage laden** — Lies `02-quellen/BA_Forschungsfrage.md` (der Metadaten-Header der Kapitel-Datei verlinkt direkt dorthin)
 
-5. **Gliederung laden** — Lies `03-docs/Gliederung.md`
+5. **Gliederung laden** — Lies `01-docs/Gliederung.md`
 
-6. **Quellenauswertung laden** — Lies die zum Kapitel gehörende Quellenauswertung aus `04-quellen/` (der Metadaten-Header verlinkt direkt dorthin)
+6. **Quellenauswertung laden** — Lies die zum Kapitel gehörende Quellenauswertung aus `02-quellen/` (der Metadaten-Header verlinkt direkt dorthin)
 
 **Was du mindestens brauchst:**
-- Die Kapitel-Datei (Markdown aus `05-text/`)
+- Die Kapitel-Datei (Markdown aus `03-text/`)
 - Feedback in einer von zwei Formen:
-  - **Review vom Reviewer-Skill**: Eine `.md`-Datei aus `07-review/` mit strukturiertem Feedback (Muss/Sollte/Optional)
+  - **Review vom Reviewer-Skill**: Eine `.md`-Datei aus `05-review/` mit strukturiertem Feedback (Muss/Sollte/Optional)
   - **Betreuer-Feedback**: Stichpunkte, E-Mail-Text, Kommentare in Word, handschriftliche Notizen — in jeder Form. Betreuer-Feedback hat oft eine andere Qualität: vager ("das müssen Sie vertiefen"), aber inhaltlich gewichtiger (der Betreuer benotet die Arbeit). Übersetze Betreuer-Feedback zuerst in das Muss/Sollte/Optional-Format, bevor du loslegst.
 
 Falls nur das Kapitel und das Feedback vorliegen, arbeite damit. Weise aber darauf hin, dass eine Überarbeitung mit Forschungsfrage und Gliederung deutlich besser gelingt.
@@ -113,14 +113,14 @@ Wenn keine neuen Quellen vorliegen, markiere die Stellen weiterhin mit `[QUELLE 
 ### Dateinamen-Konvention
 
 ```
-05-text/[Ordner]/Kapitel_[X]_[Kurztitel]_v2.md
+03-text/[Ordner]/Kapitel_[X]_[Kurztitel]_v2.md
 ```
 
 Falls bereits eine `_v2` existiert, erstelle `_v3` usw.
 
 **Beispiele:**
-- `05-text/02-Theoretischer Rahmen/Kapitel_2_Theoretische_Grundlagen_v2.md`
-- `05-text/03-Methodik/Kapitel_3_Methodik_v3.md` (wenn v2 bereits existiert)
+- `03-text/02-Theoretischer Rahmen/Kapitel_2_Theoretische_Grundlagen_v2.md`
+- `03-text/03-Methodik/Kapitel_3_Methodik_v3.md` (wenn v2 bereits existiert)
 
 So bleibt die Originalversion erhalten und der User kann vergleichen.
 
@@ -216,7 +216,7 @@ Falls die Überarbeitung den Text deutlich verlängert hat (>20% über Seitenvor
 
 ## Fortschritt.md aktualisieren
 
-Aktualisiere `06-fortschritt/Fortschritt.md` nach der Überarbeitung. Verwende das erweiterte Format mit Review-Spalten:
+Aktualisiere `04-fortschritt/Fortschritt.md` nach der Überarbeitung. Verwende das erweiterte Format mit Review-Spalten:
 
 ### Was du aktualisierst
 

@@ -65,25 +65,43 @@ Phase 7: FINALISIERUNG → Gesamtcheck → Literaturverzeichnis → Word-Datei
 
 ## Installation
 
-### Schritt 1: Repository klonen
+Es gibt drei Wege, die Pipeline zu nutzen — sortiert von einfach nach maximaler Kontrolle.
+
+### Variante A: Cowork-Plugin (ein Klick, empfohlen)
+
+Lade [`dist/bachelorarbeit-pipeline.plugin`](dist/bachelorarbeit-pipeline.plugin) herunter und ziehe die Datei in den Cowork-Chat. Cowork zeigt einen Plugin-Preview — auf **„Save plugin"** klicken, fertig. Du hast jetzt zehn Skills (`bachelorarbeit-pipeline`, `bachelorarbeit-onboarding`, `-planung`, `-recherche`, `-quellenauswertung`, `-writer`, `-reviewer`, `-ueberarbeitung`, `-finalisierung`, `humanizer`) und einen `/start`-Befehl.
+
+Danach in einer neuen Cowork-Session einfach sagen:
+> „Ich will eine Bachelorarbeit schreiben."
+
+oder:
+> `/start`
+
+### Variante B: Einzelner Skill (`.skill`)
+
+Wenn du keinen Plugin-Wust willst, sondern nur einen einzelnen Skill: Lade [`dist/bachelorarbeit.skill`](dist/bachelorarbeit.skill) herunter und ziehe die Datei in Cowork → **„Save skill"**. Das ist genau dieselbe Pipeline, aber als ein einziger Skill `bachelorarbeit`, der intern zwischen den Phasen routet.
+
+### Variante C: Repo klonen (Claude Code oder Cowork mit Vault-Ordner)
+
+Wenn du den Vault-Ordner sowieso lokal brauchst (Obsidian, Git-Versionierung, eigene Anpassungen):
 
 ```bash
 git clone https://github.com/3xLABS/bachelor.git
 ```
 
-### Schritt 2: In Claude laden
+Dann:
 
 1. Öffne **Claude Desktop** (Cowork-Mode) oder **Claude Code**
 2. Wähle den `bachelor/`-Ordner als Arbeitsverzeichnis
 3. Fertig — Claude erkennt `.claude/CLAUDE.md` und alle Skills automatisch
 
-Alle Skills liegen in `.claude/skills/` und werden von Claude beim Ordner-Öffnen sofort geladen. Kein manuelles Kopieren nötig.
+Alle Skills liegen in `.claude/skills/` und werden beim Ordner-Öffnen sofort geladen. Variante C ist identisch zu Variante A in Sachen Funktionalität, gibt dir aber zusätzlich die Vault-Struktur als Git-Repo.
 
-### Schritt 3: In Obsidian öffnen (optional)
+### In Obsidian öffnen (optional, für jede Variante)
 
-Öffne den `bachelor/`-Ordner als Obsidian-Vault: Obsidian → Vault öffnen → Ordner auswählen.
+Öffne den `bachelor/`-Ordner (oder dein Vault-Verzeichnis) als Obsidian-Vault: Obsidian → Vault öffnen → Ordner auswählen.
 
-### Schritt 4: Loslegen
+### Loslegen
 
 Sage Claude einfach:
 > „Ich will eine Bachelorarbeit schreiben."
@@ -97,6 +115,11 @@ Claude startet automatisch den Planungs-Skill.
 
 ```
 bachelor/                        ← Obsidian Vault Root + Git-Repo
+├── dist/                        ← Vorgebackene Cowork-Pakete
+│   ├── bachelorarbeit-pipeline.plugin   ← Plugin-Variante (alle Skills + /start)
+│   ├── bachelorarbeit.skill             ← Einzel-Skill-Variante
+│   ├── cowork-plugin/                   ← Plugin-Quellordner
+│   └── master-skill/                    ← Master-Skill-Quellordner
 ├── .claude/
 │   ├── CLAUDE.md                ← Pipeline-Orchestrierung (liest Claude automatisch)
 │   └── skills/                  ← Alle 8 Skills (werden automatisch erkannt)

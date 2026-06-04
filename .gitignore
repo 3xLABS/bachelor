@@ -13,3 +13,9 @@
 02-quellen/Recherche_*.md
 02-quellen/Auswertung_*.md
 02-quellen/Literaturverzeichnis_final.md
+
+# Lokale Hilfsdateien (nicht repo-relevant)
+# Vollbackups des Projektordners (enthalten eigene .git/)
+*.zip
+# Doku-Seiten fuer e3xler.com — leben im Website-Repo
+bachelor.*.mdx

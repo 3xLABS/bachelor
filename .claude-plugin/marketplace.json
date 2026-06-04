@@ -2,12 +2,12 @@
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "bachelor",
   "owner": {
-    "name": "3xLABS",
-    "email": "mail@3xlabs.xyz"
+    "name": "Chris Eichler",
+    "email": "chris@e3xler.com"
   },
   "metadata": {
-    "description": "Bachelorarbeit-Pipeline von 3xLABS — acht spezialisierte Skills für eine wissenschaftliche Bachelorarbeit (BWL).",
-    "version": "1.1.0"
+    "description": "Bachelorarbeit-Pipeline von Chris Eichler (@e3xler) — acht spezialisierte Skills für eine wissenschaftliche Bachelorarbeit (BWL).",
+    "version": "1.1.1"
   },
   "plugins": [
     {
@@ -15,11 +15,11 @@
       "source": "./dist/cowork-plugin",
       "description": "Acht spezialisierte Skills für eine wissenschaftliche Bachelorarbeit (BWL): Onboarding, Planung, Recherche, Quellenauswertung, Schreiben, Review, Überarbeitung und Finalisierung. Liefert am Ende eine abgabefertige Word-Datei.",
       "author": {
-        "name": "3xLABS",
-        "url": "https://3xlabs.xyz"
+        "name": "Chris Eichler",
+        "url": "https://e3xler.com"
       },
-      "homepage": "https://github.com/3xLABS/bachelor",
-      "repository": "https://github.com/3xLABS/bachelor",
+      "homepage": "https://github.com/e3xler/bachelor",
+      "repository": "https://github.com/e3xler/bachelor",
       "license": "MIT",
       "category": "productivity",
       "keywords": [

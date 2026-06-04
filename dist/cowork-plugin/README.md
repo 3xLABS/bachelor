@@ -49,4 +49,4 @@ Claude startet das Onboarding und führt dich von dort.
 
 ## Quelle & Lizenz
 
-[github.com/3xLABS/bachelor](https://github.com/3xLABS/bachelor) — MIT-Lizenz, frei nutzbar.
+[github.com/e3xler/bachelor](https://github.com/e3xler/bachelor) — MIT-Lizenz, frei nutzbar.

@@ -1,13 +1,13 @@
 {
   "name": "bachelorarbeit-pipeline",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Acht spezialisierte Skills für eine wissenschaftliche Bachelorarbeit (BWL): Onboarding, Planung, Recherche, Quellenauswertung, Schreiben, Review, Überarbeitung und Finalisierung. Liefert am Ende eine abgabefertige Word-Datei.",
   "author": {
-    "name": "3xLABS",
-    "url": "https://3xlabs.xyz"
+    "name": "Chris Eichler",
+    "url": "https://e3xler.com"
   },
-  "homepage": "https://github.com/3xLABS/bachelor",
-  "repository": "https://github.com/3xLABS/bachelor",
+  "homepage": "https://github.com/e3xler/bachelor",
+  "repository": "https://github.com/e3xler/bachelor",
   "license": "MIT",
   "keywords": [
     "bachelorarbeit",

@@ -72,7 +72,7 @@ Es gibt mehrere Wege, die Pipeline zu nutzen — sortiert von einfach nach maxim
 Dieses Repo ist ein Claude-Plugin-Marketplace. Du musst keine `.plugin`-Datei herunterladen, suchen oder hineinziehen — zwei Befehle genügen. In **Claude Code** oder im **Cowork-Chat** eingeben:
 
 ```
-/plugin marketplace add 3xLABS/bachelor
+/plugin marketplace add e3xler/bachelor
 /plugin install bachelorarbeit-pipeline@bachelor
 ```
 
@@ -103,7 +103,7 @@ Wenn du keinen Plugin-Wust willst, sondern nur einen einzelnen Skill: Lade [`dis
 Wenn du den Vault-Ordner sowieso lokal brauchst (Obsidian, Git-Versionierung, eigene Anpassungen):
 
 ```bash
-git clone https://github.com/3xLABS/bachelor.git
+git clone https://github.com/e3xler/bachelor.git
 ```
 
 Dann:
@@ -268,4 +268,4 @@ Frei nutzbar für persönliche und akademische Zwecke.
 
 ---
 
-Erstellt mit der [Bachelorarbeit-Pipeline](https://github.com/3xLABS/bachelor) von [3xLABS](https://3xlabs.xyz).
+Erstellt mit der [Bachelorarbeit-Pipeline](https://github.com/e3xler/bachelor) von [Chris Eichler (@e3xler)](https://e3xler.com).

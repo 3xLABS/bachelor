@@ -18,7 +18,7 @@ Vorgefertigte Cowork-Pakete für die Bachelorarbeit-Pipeline. Beide enthalten di
 Das Repo ist ein Claude-Plugin-Marketplace — kein Datei-Download nötig, nichts kann beim Download kaputtgehen. In Claude Code oder im Cowork-Chat:
 
 ```
-/plugin marketplace add 3xLABS/bachelor
+/plugin marketplace add e3xler/bachelor
 /plugin install bachelorarbeit-pipeline@bachelor
 ```
 

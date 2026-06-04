@@ -1,0 +1,240 @@
+---
+title: "Bachelorarbeit mit KI"
+slug: "bachelor"
+subtitle: "Wie du deine Bachelorarbeit mit Claude in 3 Tagen durchziehst"
+byline: "By Chris Eichler | Founder of 3xLABS"
+cover: ""
+icon: ""
+draft: false
+---
+
+<Callout>
+  Diese Anleitung zeigt dir Schritt für Schritt, wie du mit Claude (das ist die KI von Anthropic) eine komplette Bachelorarbeit schreibst. Die KI macht alles in **8 klaren Schritten** — von der Themensuche bis zur fertigen Word-Datei.
+
+  Wenn du dich an die Schritte hältst, hast du deine Arbeit in **3 Tagen** durch.
+</Callout>
+
+---
+
+# In 5 Minuten startklar
+
+1. Ein paar Accounts anlegen (machst du einmal, fertig)
+2. Die Plugin-Datei aus GitHub runterladen
+3. Datei in Claude ziehen, **„Save plugin"** klicken
+4. Ordner für deine Arbeit anlegen
+5. Claude sagen: „Ich will eine Bachelorarbeit im Fach [dein Fach] schreiben."
+
+Das war's. Den Rest macht Claude.
+
+# Was du brauchst
+
+## 1) Accounts anlegen
+
+Du brauchst Zugang zu fünf Tools. Alle haben eine Gratis-Version. Wenn du es richtig durchziehen willst, lohnen sich die Pro-Versionen.
+
+| Tool | Link | Wofür |
+|---|---|---|
+| **Claude** | [claude.ai](https://claude.ai) | Die KI, die alles steuert. Lade die Desktop-App runter und aktiviere den Cowork-Mode (braucht Pro). |
+| **Perplexity** | [perplexity.ai](https://perplexity.ai) | Googelt für dich nach echten Quellen — mit Links, die du wirklich nachprüfen kannst. |
+| **NotebookLM** | [notebooklm.google.com](https://notebooklm.google.com) | Hier lädst du alle PDFs hoch, die du als Quellen nutzt. |
+| **Gemini** | [gemini.google.com/app](https://gemini.google.com/app) | Liest deine Quellen und fasst sie für dich zusammen. |
+| **Obsidian** | [obsidian.md](https://obsidian.md) | Optional. Zeigt dir alle Dateien übersichtlich an. Wie ein Notizen-Tool. |
+
+*Ich selber zahle: Claude Max (200 €), NotebookLM Pro (20 €), Perplexity Pro (20 €). Google AI Studio ist gratis.*
+
+## 2) Die Skills installieren
+
+Drei Wege. **Variante A ist die einfachste — nimm die, wenn du keine Lust auf Setup hast.**
+
+### Variante A: Ein Klick (empfohlen)
+
+<Callout>
+  [**Download: `bachelorarbeit-pipeline.plugin`**](https://github.com/3xLABS/bachelor/raw/main/dist/bachelorarbeit-pipeline.plugin)
+</Callout>
+
+1. Datei runterladen
+2. Claude Desktop öffnen. Cowork-Mode aktivieren: Profilbild → Settings → Beta Features → **Cowork Mode** anschalten
+3. Die heruntergeladene Datei einfach in den Claude-Chat ziehen
+4. Claude zeigt dir eine Vorschau. **„Save plugin"** klicken
+
+Fertig. Claude hat jetzt alle 8 Schritte als Skills geladen.
+
+### Variante B: Nur ein Skill
+
+<Callout>
+  [**Download: `bachelorarbeit.skill`**](https://github.com/3xLABS/bachelor/raw/main/dist/bachelorarbeit.skill)
+</Callout>
+
+Wie Variante A, aber statt einem Plugin mit vielen Skills bekommst du nur einen einzigen Skill. Funktioniert genauso, ist nur schlanker. Datei runterladen, in Claude ziehen, **„Save skill"** klicken.
+
+### Variante C: Für Tech-Leute
+
+Wenn du Obsidian-Fan bist oder eh schon mit Git arbeitest:
+
+```bash
+git clone https://github.com/3xLABS/bachelor.git
+```
+
+Oder als [ZIP runterladen](https://github.com/3xLABS/bachelor/archive/refs/heads/main.zip) und entpacken. Dann in Claude den entpackten Ordner als Cowork-Ordner wählen. Claude erkennt alles automatisch.
+
+## 3) Einen Ordner für deine Arbeit anlegen
+
+Du brauchst einen Ordner auf deinem Mac (oder PC), in dem deine Arbeit lebt. Da landen am Ende die Kapitel, die Quellen und die fertige Word-Datei.
+
+**Bei Variante A oder B:** Leg einfach einen leeren Ordner an, z. B. `Bachelorarbeit` im Dokumente-Ordner. Claude baut den Rest später selbst auf.
+
+**Bei Variante C:** Der geklonte `bachelor`-Ordner ist schon dein Arbeitsordner. Nichts weiter tun.
+
+## 4) Obsidian aufmachen (kannst du auch lassen)
+
+Obsidian ist wie OneNote oder Notion, nur lokal auf deinem Rechner. Macht es einfacher, deine Texte und Quellen zu durchsuchen.
+
+1. Obsidian öffnen
+2. „Vault öffnen" → deinen Bachelorarbeit-Ordner auswählen
+3. Du siehst alle Dateien in einer schönen Übersicht
+
+Wenn du keinen Bock auf noch ein Tool hast, lass es. Die Pipeline läuft auch ohne.
+
+## 5) Loslegen
+
+1. Claude Desktop öffnen, Cowork-Mode an
+2. **Select folder** → deinen Bachelorarbeit-Ordner wählen
+3. Claude eine dieser Sätze schreiben:
+
+- „Ich will eine Bachelorarbeit im Fach [dein Fach] schreiben."
+- „Hilf mir bei der Forschungsfrage zu [dein Thema]."
+- `/start` (nur wenn du Variante A genommen hast)
+
+Claude startet automatisch und führt dich durch alles.
+
+# So läuft das ab (8 Schritte)
+
+Die KI macht das in einer festen Reihenfolge. Du musst dich nicht merken, was wann dran ist — Claude sagt dir das. Hier zur Übersicht:
+
+## Schritt 0: Check (`bachelorarbeit-onboarding`)
+
+Claude prüft, ob alles funktioniert. Hast du die richtigen Accounts? Ist der Ordner okay? Kannst du loslegen?
+
+Dauert 2 Minuten.
+
+## Schritt 1: Planung (`bachelorarbeit-planung`)
+
+Hier passiert das Wichtigste am Anfang:
+
+- Du erzählst Claude grob, worum es gehen soll
+- Claude hilft dir, das in eine **Forschungsfrage** zu verwandeln (also die eine Frage, die deine Arbeit beantwortet)
+- Ihr macht zusammen eine **Gliederung** mit Seitenzahlen
+- Claude legt die Ordner für die Kapitel an
+- Ihr macht einen **Zeitplan** rückwärts vom Abgabedatum
+
+Am Ende weißt du, was du schreibst, wie viel und bis wann.
+
+## Schritt 2: Quellen suchen (`bachelorarbeit-recherche`)
+
+Jetzt brauchst du Material zum Zitieren. Claude sagt dir, wonach du suchen sollst.
+
+- Claude gibt dir Suchbegriffe für jedes Kapitel
+- **Du** öffnest NotebookLM im Browser und suchst dort die Quellen
+- Du lädst PDFs, Paper und Links hoch
+- Claude führt Buch darüber, was du gefunden hast
+
+Tipp: Peer-reviewed Sachen sind besser als irgendein Blog. Claude erklärt dir den Unterschied.
+
+## Schritt 3: Quellen lesen (`bachelorarbeit-quellenauswertung`)
+
+Hier kommt der Trick: **Nicht Claude liest deine Quellen, sondern Gemini.** Warum? Weil Claude sonst zu viele Tokens (also Geld) verbraucht. Gemini ist günstiger und liest deine NotebookLM-Quellen direkt.
+
+<Callout>
+  **Was sind Tokens?** Stell dir das wie Sprit für die KI vor. Jedes Wort, das die KI liest oder schreibt, kostet ein bisschen. Lange Texte = viel Sprit. PDFs lesen = sehr viel Sprit.
+</Callout>
+
+**So machst du das (einmaliges Setup, 2 Minuten):**
+
+1. Claude gibt dir einen sogenannten **Systemprompt** — das ist eine Anleitung für Gemini
+2. Du öffnest Gemini, machst einen neuen **Gem** (so heißen die Custom-Bots bei Gemini) und kopierst die Anleitung rein
+3. Du verknüpfst dein NotebookLM mit dem Gem (im Chat unten links auf **+** klicken → NotebookLM)
+4. Für jedes Kapitel gibt dir Claude einen fertigen Prompt zum Reinkopieren
+5. Du kopierst Geminis Antwort zurück zu Claude — Claude bringt sie in das Format, das gebraucht wird
+
+Klingt erstmal kompliziert. Beim ersten Mal dauert es 5 Minuten, danach läuft das schnell.
+
+## Schritt 4: Schreiben (`bachelorarbeit-writer`)
+
+Jetzt schreibt Claude deine Kapitel.
+
+- Wissenschaftlicher Stil, Harvard-Zitierweise (Claude erklärt dir das, falls du es noch nicht kennst)
+- Jeder Absatz hat eine klare Aussage mit Begründung und Quelle
+- Wenn Claude eine Quelle braucht, die nicht in deinen Quellen ist, schreibt es `[QUELLE ERGÄNZEN]` rein — keine erfundenen Quellen
+
+**Reihenfolge, die sich bewährt hat:**
+Theorie → Methodik → Ergebnisse → Diskussion → Einleitung → Fazit
+
+(Einleitung und Fazit am Ende schreiben, weil du dann erst weißt, was eigentlich in der Arbeit steht.)
+
+## Schritt 5: Review (`bachelorarbeit-reviewer`)
+
+Claude liest dein Kapitel nochmal und tut so, als wäre es dein Prof:
+
+- Argumentation überzeugend?
+- Genug gute Quellen?
+- Sprache okay?
+- Hat es genug Substanz?
+
+Du bekommst Feedback in drei Stufen: **Muss** (sonst klappt's nicht), **Sollte** (besser, wenn du es noch änderst), **Optional** (kannst du machen, musst du nicht).
+
+## Schritt 6: Überarbeiten (`bachelorarbeit-ueberarbeitung`)
+
+Claude arbeitet das Feedback ein. Funktioniert auch, wenn dein Betreuer dir Feedback gibt — sag Claude einfach „Mein Betreuer meinte: [...]", und Claude baut das um.
+
+Wichtig: Dein Stil bleibt erhalten. Claude flickt nur, statt alles neu zu schreiben.
+
+<Callout>
+  **Schritt 4–6 wiederholst du für jedes Kapitel.**
+</Callout>
+
+## Schritt 7: Abgabefertig machen (`bachelorarbeit-finalisierung`)
+
+Der letzte Schritt. Claude:
+
+- Liest die ganze Arbeit durch und prüft, ob alles zusammenpasst
+- Baut das Literaturverzeichnis automatisch aus allen Quellen
+- Schließt offene Stellen wie `[QUELLE ERGÄNZEN]` oder `[SEITE PRÜFEN]`
+- Macht eine `.docx`-Datei nach den Vorgaben deiner Hochschule
+
+Du bekommst eine fertige Word-Datei. Aufmachen, Inhaltsverzeichnis aktualisieren, abgeben.
+
+# Wer macht was
+
+| Schritt | Was Claude macht | Was du machst |
+|---|---|---|
+| **Check** | Prüft, ob alles bereit ist | Tools installieren, Ordner wählen |
+| **Planung** | Forschungsfrage, Gliederung, Zeitplan | Thema beschreiben, Fragen beantworten |
+| **Quellen suchen** | Gibt dir Suchbegriffe | NotebookLM öffnen, suchen, hochladen |
+| **Quellen lesen** | Gibt dir Prompts für Gemini | Prompts in Gemini ausführen, Antworten zurück an Claude |
+| **Schreiben** | Schreibt Kapitel | Lesen, Feedback geben |
+| **Review** | Schreibt ein Review | Entscheiden, ob du was änderst |
+| **Überarbeiten** | Setzt Feedback um | Optional: Betreuer-Feedback weiterleiten |
+| **Abgabe** | Macht die Word-Datei | Druckvorgaben deiner Uni geben |
+
+# Wo bin ich gerade?
+
+Frag Claude jederzeit: „Wie ist der Stand?"
+
+Claude weiß immer, wo du gerade bist. Jedes Kapitel hat einen von diesen Status:
+
+```
+Ausstehend → Erster Entwurf → Reviewed → Überarbeitet → Final
+```
+
+# Bevor du abgibst — Checkliste
+
+- [ ] Alle `[QUELLE ERGÄNZEN]` durch echte Quellen ersetzt?
+- [ ] Alle `[SEITE PRÜFEN]` kontrolliert?
+- [ ] Alle `[ABBILDUNG X.Y]` durch echte Abbildungen ersetzt?
+- [ ] Literaturverzeichnis komplett?
+- [ ] Inhaltsverzeichnis in Word aktualisiert? (Rechtsklick → Felder aktualisieren)
+- [ ] Plagiatscheck deiner Hochschule durchgelaufen?
+- [ ] Formatierung passt zur Hochschulvorgabe?
+- [ ] Eidesstattliche Erklärung unterschrieben?
+
+Dann: abgeben und durchatmen.

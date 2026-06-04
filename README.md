@@ -65,23 +65,40 @@ Phase 7: FINALISIERUNG → Gesamtcheck → Literaturverzeichnis → Word-Datei
 
 ## Installation
 
-Es gibt drei Wege, die Pipeline zu nutzen — sortiert von einfach nach maximaler Kontrolle.
+Es gibt mehrere Wege, die Pipeline zu nutzen — sortiert von einfach nach maximaler Kontrolle. **Variante A (Marketplace) ist die zuverlässigste und braucht keinen Datei-Download.**
 
-### Variante A: Cowork-Plugin (ein Klick, empfohlen)
+### Variante A: Marketplace (ein Befehl, empfohlen)
 
-Lade [`dist/bachelorarbeit-pipeline.plugin`](dist/bachelorarbeit-pipeline.plugin) herunter und ziehe die Datei in den Cowork-Chat. Cowork zeigt einen Plugin-Preview — auf **„Save plugin"** klicken, fertig. Du hast jetzt zehn Skills (`bachelorarbeit-pipeline`, `bachelorarbeit-onboarding`, `-planung`, `-recherche`, `-quellenauswertung`, `-writer`, `-reviewer`, `-ueberarbeitung`, `-finalisierung`, `humanizer`) und einen `/start`-Befehl.
+Dieses Repo ist ein Claude-Plugin-Marketplace. Du musst keine `.plugin`-Datei herunterladen, suchen oder hineinziehen — zwei Befehle genügen. In **Claude Code** oder im **Cowork-Chat** eingeben:
 
-Danach in einer neuen Cowork-Session einfach sagen:
+```
+/plugin marketplace add 3xLABS/bachelor
+/plugin install bachelorarbeit-pipeline@bachelor
+```
+
+Fertig. Du hast jetzt zehn Skills (`bachelorarbeit-pipeline`, `bachelorarbeit-onboarding`, `-planung`, `-recherche`, `-quellenauswertung`, `-writer`, `-reviewer`, `-ueberarbeitung`, `-finalisierung`, `humanizer`) und einen `/start`-Befehl.
+
+Updates später holst du dir mit:
+
+```
+/plugin marketplace update bachelor
+```
+
+Danach in einer neuen Session einfach sagen:
 > „Ich will eine Bachelorarbeit schreiben."
 
 oder:
 > `/start`
 
-### Variante B: Einzelner Skill (`.skill`)
+### Variante B: Plugin-Datei per Drag-&-Drop (Fallback ohne Marketplace)
+
+Falls du den Marketplace nicht nutzen willst: Lade [`dist/bachelorarbeit-pipeline.plugin`](dist/bachelorarbeit-pipeline.plugin) herunter (Rechtsklick → „Datei speichern unter" bzw. auf GitHub „Download raw file"), ziehe sie in den Cowork-Chat und klicke im Preview auf **„Save plugin"**. Wichtig: Die Datei muss die Endung `.plugin` behalten und darf vom Browser nicht entpackt werden — falls dein Browser ein `.zip` daraus macht, einfach wieder in `.plugin` umbenennen.
+
+### Variante C: Einzelner Skill (`.skill`)
 
 Wenn du keinen Plugin-Wust willst, sondern nur einen einzelnen Skill: Lade [`dist/bachelorarbeit.skill`](dist/bachelorarbeit.skill) herunter und ziehe die Datei in Cowork → **„Save skill"**. Das ist genau dieselbe Pipeline, aber als ein einziger Skill `bachelorarbeit`, der intern zwischen den Phasen routet.
 
-### Variante C: Repo klonen (Claude Code oder Cowork mit Vault-Ordner)
+### Variante D: Repo klonen (Claude Code oder Cowork mit Vault-Ordner)
 
 Wenn du den Vault-Ordner sowieso lokal brauchst (Obsidian, Git-Versionierung, eigene Anpassungen):
 

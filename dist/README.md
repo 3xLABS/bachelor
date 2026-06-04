@@ -13,14 +13,25 @@ Vorgefertigte Cowork-Pakete für die Bachelorarbeit-Pipeline. Beide enthalten di
 
 ## Installation
 
-### Variante A: Plugin (empfohlen)
+### Variante A: Marketplace (empfohlen, ein Befehl)
 
-1. Lade `bachelorarbeit-pipeline.plugin` herunter.
+Das Repo ist ein Claude-Plugin-Marketplace — kein Datei-Download nötig, nichts kann beim Download kaputtgehen. In Claude Code oder im Cowork-Chat:
+
+```
+/plugin marketplace add 3xLABS/bachelor
+/plugin install bachelorarbeit-pipeline@bachelor
+```
+
+Updates später: `/plugin marketplace update bachelor`.
+
+### Variante B: Plugin-Datei (Drag-&-Drop-Fallback)
+
+1. Lade `bachelorarbeit-pipeline.plugin` herunter (Endung muss `.plugin` bleiben — nicht entpacken lassen; ggf. zurück in `.plugin` umbenennen).
 2. Doppelklick auf die Datei oder ziehe sie in den Cowork-Chat.
 3. Im Plugin-Preview "Save plugin" klicken.
 4. Cowork lädt alle Skills (`bachelorarbeit-pipeline`, `-onboarding`, `-planung`, `-recherche`, `-quellenauswertung`, `-writer`, `-reviewer`, `-ueberarbeitung`, `-finalisierung`, `humanizer`) und den `/start`-Command.
 
-### Variante B: Einzelner Skill
+### Variante C: Einzelner Skill
 
 1. Lade `bachelorarbeit.skill` herunter.
 2. Doppelklick oder Drag-&-Drop in Cowork.
